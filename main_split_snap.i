@@ -4537,6 +4537,7 @@ int main(int argc, char *argv[])
     }
 
   infile = argv[1];
+  printf("Reading parameters\n");
   read_parameters(infile);
 
 

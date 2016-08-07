@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
     }//if   
   
   infile     = argv[1];             // Parameters file
+  printf("Reading parameters\n");
   read_parameters(infile);
   
   /*+++++ Transforming the number of files to separation in one axis +++++*/

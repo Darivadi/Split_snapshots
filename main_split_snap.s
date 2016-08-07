@@ -925,23 +925,25 @@ writeGADGETBinaryFile:
 	.section	.rodata.str1.1
 .LC32:
 	.string	"%s Parameters_file\n"
+.LC33:
+	.string	"Reading parameters"
 	.section	.rodata.str1.8
 	.align 8
-.LC35:
+.LC36:
 	.string	"-----------------------------------------------"
 	.section	.rodata.str1.1
-.LC36:
+.LC37:
 	.string	"Cosmological parameters:"
 	.section	.rodata.str1.8
 	.align 8
-.LC37:
+.LC38:
 	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf\n"
 	.section	.rodata.str1.1
-.LC38:
-	.string	"Filename=%s\n"
 .LC39:
-	.string	"./Box_400_512_150.%d"
+	.string	"Filename=%s\n"
 .LC40:
+	.string	"./Box_400_512_150.%d"
+.LC41:
 	.string	"File %d was writen\n"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4,,15
@@ -976,13 +978,16 @@ main:
 	xorl	%eax, %eax
 	cmpl	$1, %edi
 	jle	.L123
-	movq	8(%rsi), %rdi
+	movq	8(%rsi), %rbx
+	movl	$.LC33, %edi
+	call	puts
+	movq	%rbx, %rdi
 	call	read_parameters
 	movss	GV+12(%rip), %xmm0
-	movsd	.LC33(%rip), %xmm1
+	movsd	.LC34(%rip), %xmm1
 	cvtps2pd	%xmm0, %xmm0
 	call	pow
-	movsd	.LC34(%rip), %xmm1
+	movsd	.LC35(%rip), %xmm1
 	xorl	%eax, %eax
 	movsd	%xmm0, (%rsp)
 	divsd	%xmm0, %xmm1
@@ -991,7 +996,7 @@ main:
 	movss	%xmm6, GV+16(%rip)
 	call	readGADGETBinaryFile
 	movss	Header+100(%rip), %xmm0
-	movl	$.LC35, %edi
+	movl	$.LC36, %edi
 	movss	%xmm0, GV+1024(%rip)
 	movl	%eax, GV+4(%rip)
 	movss	Header+104(%rip), %xmm0
@@ -1005,11 +1010,11 @@ main:
 	movss	Header+28(%rip), %xmm0
 	movss	%xmm0, GV+8(%rip)
 	call	puts
-	movl	$.LC36, %edi
+	movl	$.LC37, %edi
 	call	puts
 	movss	GV+1024(%rip), %xmm0
 	movss	GV+1040(%rip), %xmm3
-	movl	$.LC37, %esi
+	movl	$.LC38, %esi
 	movss	GV+1032(%rip), %xmm2
 	movss	GV+1028(%rip), %xmm1
 	movl	$1, %edi
@@ -1019,14 +1024,14 @@ main:
 	cvtps2pd	%xmm2, %xmm2
 	cvtps2pd	%xmm1, %xmm1
 	call	__printf_chk
-	movl	$.LC35, %edi
+	movl	$.LC36, %edi
 	call	puts
 	movl	$GV+24, %edx
-	movl	$.LC38, %esi
+	movl	$.LC39, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC35, %edi
+	movl	$.LC36, %edi
 	call	puts
 	movsd	(%rsp), %xmm4
 	cvttsd2si	%xmm4, %eax
@@ -1053,7 +1058,7 @@ main:
 	movl	16(%rsp), %ebp
 	leal	-1(%rbx), %r12d
 	leaq	48(%rsp), %rdi
-	movl	$.LC39, %r8d
+	movl	$.LC40, %r8d
 	movl	$50, %ecx
 	movl	$1, %edx
 	movl	$50, %esi
@@ -1196,7 +1201,7 @@ main:
 .L127:
 	.cfi_restore_state
 	movl	%ebp, %edx
-	movl	$.LC40, %esi
+	movl	$.LC41, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
@@ -1243,11 +1248,11 @@ part:
 	.comm	GV,1044,32
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8
-.LC33:
+.LC34:
 	.long	1431655765
 	.long	1070945621
 	.align 8
-.LC34:
+.LC35:
 	.long	0
 	.long	1072693248
 	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4"
