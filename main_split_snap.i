@@ -4206,19 +4206,24 @@ struct gadget_head
 
 int conf2dump( char filename[] )
 {
-    char cmd[1000];
+  int nread;
+  char cmd[1000];
+
+  printf("Inside conf2dump routine\n");
+
+  sprintf( cmd,
+    "grep -v \"#\" %s | grep -v \"^$\" | gawk -F\"=\" '{print $2}' > %s.dump",
+    filename, filename );
 
 
 
 
 
-    printf("Inside conf2dump routine\n");
-    sprintf( cmd,
-      "grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump",
-      filename, filename );
-    system( cmd );
 
-    return 0;
+   nread = system( cmd );
+
+  printf("Leaving conf2dump routine\n");
+  return 0;
 }
 
 
@@ -4249,7 +4254,7 @@ int read_parameters( char filename[] )
     file = fopen( filenamedump, "r" );
 
 
-    fscanf(file, "%d", GV.lengthDivs);
+    fscanf(file, "%d", &GV.lengthDivs);
     fscanf(file, "%s", GV.FILENAME);
 
     GV.NFiles = 1.0 * GV.lengthDivs * GV.lengthDivs* GV.lengthDivs;
@@ -4263,7 +4268,7 @@ int read_parameters( char filename[] )
 
     return 0;
 }
-# 71 "readWrite.h"
+# 76 "readWrite.h"
 int readGADGETBinaryFile(){
   FILE *fdata = ((void *)0);
   int i, j;
@@ -4400,7 +4405,7 @@ int readGADGETBinaryFile(){
   fclose(fdata);
   return N_tot;
 }
-# 220 "readWrite.h"
+# 225 "readWrite.h"
 int writeGADGETBinaryFile(char FileNum[100]){
   FILE *fdata = ((void *)0);
   int i, j;
@@ -4470,7 +4475,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
 
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 299 "readWrite.h"
+# 304 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4493,7 +4498,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
  }
       N_min=N_max;
     }
-# 346 "readWrite.h"
+# 351 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 

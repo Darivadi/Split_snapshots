@@ -2,19 +2,24 @@
 //Convert data file text in plain text 
 int conf2dump( char filename[] )
 {
-    char cmd[1000];
-    /*
-      sprintf( cmd, 
-    "grep -v \"#\" %s | grep -v \"^$\" | gawk -F\"=\" '{print $2}' > %s.dump", 
-	filename, filename );
-    */
-    printf("Inside conf2dump routine\n");
+  int nread;
+  char cmd[1000];
+  
+  printf("Inside conf2dump routine\n");
+  
+  sprintf( cmd, 
+	   "grep -v \"#\" %s | grep -v \"^$\" | gawk -F\"=\" '{print $2}' > %s.dump", 
+	   filename, filename );
+  
+  /*
     sprintf( cmd, 
-	     "grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump", 
-	     filename, filename );
-    system( cmd );
-
-    return 0;
+    "grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump", 
+    filename, filename );
+  */
+   nread = system( cmd );
+  
+  printf("Leaving conf2dump routine\n");
+  return 0;
 }
 /*************************************************************/
 
@@ -45,7 +50,7 @@ int read_parameters( char filename[] )
     file = fopen( filenamedump, "r" );
     
     /*Reading filename*/
-    fscanf(file, "%d", GV.lengthDivs);     
+    fscanf(file, "%d", &GV.lengthDivs);     
     fscanf(file, "%s", GV.FILENAME); 
 
     GV.NFiles = 1.0 * GV.lengthDivs * GV.lengthDivs* GV.lengthDivs;

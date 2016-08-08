@@ -5,7 +5,10 @@
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
 .LC1:
-	.string	"grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump"
+	.string	"grep -v \"#\" %s | grep -v \"^$\" | gawk -F\"=\" '{print $2}' > %s.dump"
+	.section	.rodata.str1.1
+.LC2:
+	.string	"Leaving conf2dump routine"
 	.text
 	.p2align 4,,15
 	.globl	conf2dump
@@ -34,6 +37,8 @@ conf2dump:
 	call	__sprintf_chk
 	movq	%rsp, %rdi
 	call	system
+	movl	$.LC2, %edi
+	call	puts
 	xorl	%eax, %eax
 	movq	1000(%rsp), %rdx
 	xorq	%fs:40, %rdx
@@ -51,29 +56,29 @@ conf2dump:
 .LFE64:
 	.size	conf2dump, .-conf2dump
 	.section	.rodata.str1.1
-.LC2:
-	.string	"Filename: %s\n"
 .LC3:
+	.string	"Filename: %s\n"
+.LC4:
 	.string	"r"
 	.section	.rodata.str1.8
 	.align 8
-.LC4:
+.LC5:
 	.string	"  * The file '%s' doesn't exist!\n"
 	.section	.rodata.str1.1
-.LC5:
-	.string	"Converting to plain text"
 .LC6:
-	.string	"%s.dump"
+	.string	"Converting to plain text"
 .LC7:
-	.string	"%d"
+	.string	"%s.dump"
 .LC8:
+	.string	"%d"
+.LC9:
 	.string	"%s"
 	.section	.rodata.str1.8
 	.align 8
-.LC9:
+.LC10:
 	.string	"  * The file '%s' has been loaded!\n"
 	.section	.rodata.str1.1
-.LC10:
+.LC11:
 	.string	"rm -rf %s.dump"
 	.text
 	.p2align 4,,15
@@ -86,7 +91,7 @@ read_parameters:
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
 	movq	%rdi, %rdx
-	movl	$.LC2, %esi
+	movl	$.LC3, %esi
 	pushq	%rbx
 	.cfi_def_cfa_offset 24
 	.cfi_offset 3, -24
@@ -98,14 +103,14 @@ read_parameters:
 	movq	%rax, 2008(%rsp)
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC3, %esi
+	movl	$.LC4, %esi
 	movq	%rbx, %rdi
 	call	fopen
 	testq	%rax, %rax
 	je	.L11
 	movq	%rax, %rdi
 	call	fclose
-	movl	$.LC5, %edi
+	movl	$.LC6, %edi
 	call	puts
 	movl	$.LC0, %edi
 	call	puts
@@ -119,24 +124,26 @@ read_parameters:
 	call	__sprintf_chk
 	leaq	1008(%rsp), %rdi
 	call	system
+	movl	$.LC2, %edi
+	call	puts
 	leaq	1008(%rsp), %rdi
 	movq	%rbx, %r8
-	movl	$.LC6, %ecx
+	movl	$.LC7, %ecx
 	movl	$1000, %edx
 	movl	$1, %esi
 	xorl	%eax, %eax
 	call	__sprintf_chk
 	leaq	1008(%rsp), %rdi
-	movl	$.LC3, %esi
+	movl	$.LC4, %esi
 	call	fopen
-	movl	GV+20(%rip), %edx
+	movl	$GV+20, %edx
 	movq	%rax, %rbp
 	movq	%rax, %rdi
-	movl	$.LC7, %esi
+	movl	$.LC8, %esi
 	xorl	%eax, %eax
 	call	__isoc99_fscanf
 	movl	$GV+24, %edx
-	movl	$.LC8, %esi
+	movl	$.LC9, %esi
 	movq	%rbp, %rdi
 	xorl	%eax, %eax
 	call	__isoc99_fscanf
@@ -150,12 +157,12 @@ read_parameters:
 	movss	%xmm2, GV+12(%rip)
 	call	fclose
 	movq	%rbx, %rdx
-	movl	$.LC9, %esi
+	movl	$.LC10, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
 	movq	%rbx, %r8
-	movl	$.LC10, %ecx
+	movl	$.LC11, %ecx
 	movl	$1000, %edx
 	movl	$1, %esi
 	movq	%rsp, %rdi
@@ -181,7 +188,7 @@ read_parameters:
 .L11:
 	.cfi_restore_state
 	movq	%rbx, %rdx
-	movl	$.LC4, %esi
+	movl	$.LC5, %esi
 	movl	$1, %edi
 	call	__printf_chk
 	movl	$1, %eax
@@ -193,54 +200,54 @@ read_parameters:
 	.size	read_parameters, .-read_parameters
 	.section	.rodata.str1.8
 	.align 8
-.LC11:
+.LC12:
 	.string	"############################################################"
 	.section	.rodata.str1.1
-.LC12:
-	.string	"Reading snapshot %s\n"
 .LC13:
+	.string	"Reading snapshot %s\n"
+.LC14:
 	.string	"File %s cannot be open\n"
 	.section	.rodata.str1.8
 	.align 8
-.LC14:
+.LC15:
 	.string	"----------------------------------------"
 	.section	.rodata.str1.1
-.LC15:
+.LC16:
 	.string	"Reading snapshot with:"
 	.section	.rodata.str1.8
 	.align 8
-.LC16:
+.LC17:
 	.string	"Type %d has Npart=%12d NpartTotal=%12d with mass %16.8lf\n"
 	.align 8
-.LC17:
+.LC18:
 	.string	" There is a total %d particles in the snapshot\n\n"
 	.section	.rodata.str1.1
-.LC18:
-	.string	" * Frame's Time... %16.8f\n"
 .LC19:
-	.string	" * Redshift... %16.8f\n"
+	.string	" * Frame's Time... %16.8f\n"
 .LC20:
-	.string	" * Flagsfr... %d\n"
+	.string	" * Redshift... %16.8f\n"
 .LC21:
-	.string	" * Flagfed... %d\n"
+	.string	" * Flagsfr... %d\n"
 .LC22:
-	.string	" * Flagcool... %d\n"
+	.string	" * Flagfed... %d\n"
 .LC23:
-	.string	" * numfiles... %d\n"
+	.string	" * Flagcool... %d\n"
 .LC24:
-	.string	" * Boxsize... %16.8f\n"
+	.string	" * numfiles... %d\n"
 .LC25:
-	.string	" * Omega0... %16.8f\n"
+	.string	" * Boxsize... %16.8f\n"
 .LC26:
-	.string	" * OmageLa... %16.8f\n"
+	.string	" * Omega0... %16.8f\n"
 .LC27:
+	.string	" * OmageLa... %16.8f\n"
+.LC28:
 	.string	" * Hubbleparam... %16.8f\n"
 	.section	.rodata.str1.8
 	.align 8
-.LC28:
+.LC29:
 	.string	"Structure particles could not be allocated"
 	.align 8
-.LC29:
+.LC30:
 	.string	" Can not read properly ids %d %lu\n"
 	.text
 	.p2align 4,,15
@@ -252,7 +259,7 @@ readGADGETBinaryFile:
 	pushq	%r15
 	.cfi_def_cfa_offset 16
 	.cfi_offset 15, -16
-	movl	$.LC11, %edi
+	movl	$.LC12, %edi
 	pushq	%r14
 	.cfi_def_cfa_offset 24
 	.cfi_offset 14, -24
@@ -272,11 +279,11 @@ readGADGETBinaryFile:
 	.cfi_def_cfa_offset 112
 	call	puts
 	movl	$GV+24, %edx
-	movl	$.LC12, %esi
+	movl	$.LC13, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC3, %esi
+	movl	$.LC4, %esi
 	movl	$GV+24, %edi
 	call	fopen
 	testq	%rax, %rax
@@ -300,11 +307,11 @@ readGADGETBinaryFile:
 	movl	$1, %edx
 	movl	$4, %esi
 	call	fread
-	movl	$.LC14, %edi
-	call	puts
 	movl	$.LC15, %edi
 	call	puts
-	movl	$.LC14, %edi
+	movl	$.LC16, %edi
+	call	puts
+	movl	$.LC15, %edi
 	call	puts
 	.p2align 4,,10
 	.p2align 3
@@ -313,7 +320,7 @@ readGADGETBinaryFile:
 	movl	Header+64(,%rbp,4), %r8d
 	movl	Header(,%rbp,4), %ecx
 	movl	%ebp, %edx
-	movl	$.LC16, %esi
+	movl	$.LC17, %esi
 	movl	$1, %edi
 	cvtps2pd	%xmm0, %xmm0
 	movl	$1, %eax
@@ -323,64 +330,64 @@ readGADGETBinaryFile:
 	cmpq	$6, %rbp
 	jne	.L16
 	movl	%r12d, %edx
-	movl	$.LC17, %esi
+	movl	$.LC18, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC14, %edi
+	movl	$.LC15, %edi
 	call	puts
 	movss	Header+48(%rip), %xmm0
-	movl	$.LC18, %esi
-	movl	$1, %edi
-	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
-	call	__printf_chk
-	movss	Header+52(%rip), %xmm0
 	movl	$.LC19, %esi
 	movl	$1, %edi
 	movl	$1, %eax
 	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movl	Header+56(%rip), %edx
+	movss	Header+52(%rip), %xmm0
 	movl	$.LC20, %esi
-	movl	$1, %edi
-	xorl	%eax, %eax
-	call	__printf_chk
-	movl	Header+60(%rip), %edx
-	movl	$.LC21, %esi
-	movl	$1, %edi
-	xorl	%eax, %eax
-	call	__printf_chk
-	movl	Header+88(%rip), %edx
-	movl	$.LC22, %esi
-	movl	$1, %edi
-	xorl	%eax, %eax
-	call	__printf_chk
-	movl	Header+92(%rip), %edx
-	movl	$.LC23, %esi
-	movl	$1, %edi
-	xorl	%eax, %eax
-	call	__printf_chk
-	movss	Header+96(%rip), %xmm0
-	movl	$.LC24, %esi
 	movl	$1, %edi
 	movl	$1, %eax
 	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+100(%rip), %xmm0
+	movl	Header+56(%rip), %edx
+	movl	$.LC21, %esi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk
+	movl	Header+60(%rip), %edx
+	movl	$.LC22, %esi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk
+	movl	Header+88(%rip), %edx
+	movl	$.LC23, %esi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk
+	movl	Header+92(%rip), %edx
+	movl	$.LC24, %esi
+	movl	$1, %edi
+	xorl	%eax, %eax
+	call	__printf_chk
+	movss	Header+96(%rip), %xmm0
 	movl	$.LC25, %esi
 	movl	$1, %edi
 	movl	$1, %eax
 	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+104(%rip), %xmm0
+	movss	Header+100(%rip), %xmm0
 	movl	$.LC26, %esi
 	movl	$1, %edi
 	movl	$1, %eax
 	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+108(%rip), %xmm0
+	movss	Header+104(%rip), %xmm0
 	movl	$.LC27, %esi
+	movl	$1, %edi
+	movl	$1, %eax
+	cvtps2pd	%xmm0, %xmm0
+	call	__printf_chk
+	movss	Header+108(%rip), %xmm0
+	movl	$.LC28, %esi
 	movl	$1, %edi
 	movl	$1, %eax
 	cvtps2pd	%xmm0, %xmm0
@@ -633,13 +640,13 @@ readGADGETBinaryFile:
 .L56:
 	.cfi_restore_state
 	movl	$GV+24, %edx
-	movl	$.LC13, %esi
+	movl	$.LC14, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
 	jmp	.L14
 .L57:
-	movl	$.LC28, %edi
+	movl	$.LC29, %edi
 	call	puts
 	xorl	%edi, %edi
 	call	exit
@@ -652,7 +659,7 @@ readGADGETBinaryFile:
 	movq	%r15, %rcx
 .L55:
 	movl	$1, %edi
-	movl	$.LC29, %esi
+	movl	$.LC30, %esi
 	xorl	%eax, %eax
 	call	__printf_chk
 	xorl	%edi, %edi
@@ -661,7 +668,7 @@ readGADGETBinaryFile:
 .LFE66:
 	.size	readGADGETBinaryFile, .-readGADGETBinaryFile
 	.section	.rodata.str1.1
-.LC31:
+.LC32:
 	.string	"w"
 	.text
 	.p2align 4,,15
@@ -686,16 +693,16 @@ writeGADGETBinaryFile:
 	.cfi_def_cfa_offset 48
 	.cfi_offset 3, -48
 	movq	%rdi, %rbx
-	movl	$.LC11, %edi
+	movl	$.LC12, %edi
 	subq	$64, %rsp
 	.cfi_def_cfa_offset 112
 	call	puts
 	movl	$GV+24, %edx
-	movl	$.LC12, %esi
+	movl	$.LC13, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC31, %esi
+	movl	$.LC32, %esi
 	movq	%rbx, %rdi
 	call	fopen
 	testq	%rax, %rax
@@ -918,7 +925,7 @@ writeGADGETBinaryFile:
 	jmp	.L80
 .L91:
 	movq	%rbx, %rdx
-	movl	$.LC13, %esi
+	movl	$.LC14, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
@@ -934,30 +941,30 @@ writeGADGETBinaryFile:
 	.size	writeGADGETBinaryFile, .-writeGADGETBinaryFile
 	.section	.rodata.str1.8
 	.align 8
-.LC32:
+.LC33:
 	.string	"Error: Incomplete number of parameters. Execute as follows:"
 	.section	.rodata.str1.1
-.LC33:
-	.string	"%s Parameters_file\n"
 .LC34:
+	.string	"%s Parameters_file\n"
+.LC35:
 	.string	"Reading parameters"
 	.section	.rodata.str1.8
 	.align 8
-.LC37:
+.LC38:
 	.string	"-----------------------------------------------"
 	.section	.rodata.str1.1
-.LC38:
+.LC39:
 	.string	"Cosmological parameters:"
 	.section	.rodata.str1.8
 	.align 8
-.LC39:
+.LC40:
 	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf\n"
 	.section	.rodata.str1.1
-.LC40:
-	.string	"Filename=%s\n"
 .LC41:
-	.string	"./Box_400_512_150.%d"
+	.string	"Filename=%s\n"
 .LC42:
+	.string	"./Box_400_512_150.%d"
+.LC43:
 	.string	"File %d was writen\n"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4,,15
@@ -993,15 +1000,15 @@ main:
 	cmpl	$1, %edi
 	jle	.L123
 	movq	8(%rsi), %rbx
-	movl	$.LC34, %edi
+	movl	$.LC35, %edi
 	call	puts
 	movq	%rbx, %rdi
 	call	read_parameters
 	movss	GV+12(%rip), %xmm0
-	movsd	.LC35(%rip), %xmm1
+	movsd	.LC36(%rip), %xmm1
 	cvtps2pd	%xmm0, %xmm0
 	call	pow
-	movsd	.LC36(%rip), %xmm1
+	movsd	.LC37(%rip), %xmm1
 	xorl	%eax, %eax
 	movsd	%xmm0, (%rsp)
 	divsd	%xmm0, %xmm1
@@ -1010,7 +1017,7 @@ main:
 	movss	%xmm6, GV+16(%rip)
 	call	readGADGETBinaryFile
 	movss	Header+100(%rip), %xmm0
-	movl	$.LC37, %edi
+	movl	$.LC38, %edi
 	movss	%xmm0, GV+1024(%rip)
 	movl	%eax, GV+4(%rip)
 	movss	Header+104(%rip), %xmm0
@@ -1024,11 +1031,11 @@ main:
 	movss	Header+28(%rip), %xmm0
 	movss	%xmm0, GV+8(%rip)
 	call	puts
-	movl	$.LC38, %edi
+	movl	$.LC39, %edi
 	call	puts
 	movss	GV+1024(%rip), %xmm0
 	movss	GV+1040(%rip), %xmm3
-	movl	$.LC39, %esi
+	movl	$.LC40, %esi
 	movss	GV+1032(%rip), %xmm2
 	movss	GV+1028(%rip), %xmm1
 	movl	$1, %edi
@@ -1038,14 +1045,14 @@ main:
 	cvtps2pd	%xmm2, %xmm2
 	cvtps2pd	%xmm1, %xmm1
 	call	__printf_chk
-	movl	$.LC37, %edi
+	movl	$.LC38, %edi
 	call	puts
 	movl	$GV+24, %edx
-	movl	$.LC40, %esi
+	movl	$.LC41, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC37, %edi
+	movl	$.LC38, %edi
 	call	puts
 	movsd	(%rsp), %xmm4
 	cvttsd2si	%xmm4, %eax
@@ -1072,7 +1079,7 @@ main:
 	movl	16(%rsp), %ebp
 	leal	-1(%rbx), %r12d
 	leaq	48(%rsp), %rdi
-	movl	$.LC41, %r8d
+	movl	$.LC42, %r8d
 	movl	$50, %ecx
 	movl	$1, %edx
 	movl	$50, %esi
@@ -1215,7 +1222,7 @@ main:
 .L127:
 	.cfi_restore_state
 	movl	%ebp, %edx
-	movl	$.LC42, %esi
+	movl	$.LC43, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
@@ -1231,11 +1238,11 @@ main:
 	movq	%rax, %rdi
 	jmp	.L97
 .L123:
-	movl	$.LC32, %edi
+	movl	$.LC33, %edi
 	call	puts
 	movq	(%rbx), %rdx
 	movl	$1, %edi
-	movl	$.LC33, %esi
+	movl	$.LC34, %esi
 	xorl	%eax, %eax
 	call	__printf_chk
 	xorl	%edi, %edi
@@ -1262,11 +1269,11 @@ part:
 	.comm	GV,1044,32
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8
-.LC35:
+.LC36:
 	.long	1431655765
 	.long	1070945621
 	.align 8
-.LC36:
+.LC37:
 	.long	0
 	.long	1072693248
 	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4"
