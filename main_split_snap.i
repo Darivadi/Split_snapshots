@@ -4407,10 +4407,10 @@ int readGADGETBinaryFile(){
   return N_tot;
 }
 # 226 "readWrite.h"
-int writeGADGETBinaryFile(char FileNum[100]){
+int writeGADGETBinaryFile(char FileNum[100], int N_tot){
   FILE *fdata = ((void *)0);
   int i, j;
-  int N_tot, N_min, N_max, dummy, nread=0;
+  int N_min, N_max, dummy, nread=0;
   float Maux, faux[3];
   unsigned int uintaux;
 
@@ -4425,8 +4425,8 @@ int writeGADGETBinaryFile(char FileNum[100]){
     }
   printf("File %s is ready to be writen\n", FileNum);
 
-  N_tot = GV.NpTot;
 
+  printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
 
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   fwrite(&Header, sizeof(struct gadget_head), 1, fdata);
@@ -4653,7 +4653,7 @@ int main(int argc, char *argv[])
   }
 
        printf("Writing file %d\n", f);
-       writeGADGETBinaryFile(buffer);
+       writeGADGETBinaryFile(buffer, partsCount);
 
        free(copyPart);
 
@@ -4663,6 +4663,7 @@ int main(int argc, char *argv[])
     printf("File %d was writen\n", f);
   }
 
+       partsCount = 0;
      }
  }
     }

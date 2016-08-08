@@ -149,7 +149,7 @@ int main(int argc, char *argv[])
 		}//for m	      
 	      
 	      printf("Writing file %d\n", f);
-	      writeGADGETBinaryFile(buffer);	      
+	      writeGADGETBinaryFile(buffer, partsCount);	      
 
 	      free(copyPart);
 
@@ -159,6 +159,7 @@ int main(int argc, char *argv[])
 		  printf("File %d was writen\n", f);
 		}//if
 
+	      partsCount = 0;
 	    }//for k
 	}//for j      
     }//for i

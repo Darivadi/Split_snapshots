@@ -223,10 +223,10 @@ RETURN: 0
 ****************************************************************************************************/
 
 
-int writeGADGETBinaryFile(char FileNum[100]){
+int writeGADGETBinaryFile(char FileNum[100], int N_tot){
   FILE *fdata = NULL;
   int i, j;
-  int N_tot, N_min, N_max, dummy, nread=0;
+  int  N_min, N_max, dummy, nread=0;
   float Maux, faux[3];
   unsigned int uintaux;
 
@@ -241,7 +241,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
     }
   printf("File %s is ready to be writen\n", FileNum);
 
-  N_tot = GV.NpTot;
+  //N_tot = GV.NpTot;
   printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
   
   fwrite(&dummy, sizeof(dummy), 1, fdata);
