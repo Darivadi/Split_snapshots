@@ -231,14 +231,16 @@ int writeGADGETBinaryFile(char FileNum[100]){
   unsigned int uintaux;
 
   printf("############################################################\n");
-  printf("Reading snapshot %s\n", GV.FILENAME);
+  printf("Writing in file %s\n", FileNum);
   fdata = fopen(FileNum,"w");
+  
   
   if(fdata == NULL)
     {
       printf("File %s cannot be open\n", FileNum);
     }
-  
+  printf("File %s is ready to be writen\n", FileNum);
+
   N_tot = GV.NpTot;
   
   

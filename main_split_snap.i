@@ -4415,13 +4415,15 @@ int writeGADGETBinaryFile(char FileNum[100]){
   unsigned int uintaux;
 
   printf("############################################################\n");
-  printf("Reading snapshot %s\n", GV.FILENAME);
+  printf("Writing in file %s\n", FileNum);
   fdata = fopen(FileNum,"w");
+
 
   if(fdata == ((void *)0))
     {
       printf("File %s cannot be open\n", FileNum);
     }
+  printf("File %s is ready to be writen\n", FileNum);
 
   N_tot = GV.NpTot;
 
@@ -4476,7 +4478,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
 
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 305 "readWrite.h"
+# 307 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4499,7 +4501,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
  }
       N_min=N_max;
     }
-# 352 "readWrite.h"
+# 354 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 
@@ -4636,6 +4638,7 @@ int main(int argc, char *argv[])
 
   }
 
+       printf("Writting file %d", f);
        writeGADGETBinaryFile(buffer);
 
        free(copyPart);

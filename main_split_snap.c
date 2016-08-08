@@ -139,6 +139,7 @@ int main(int argc, char *argv[])
 		  
 		}//for m	      
 	      
+	      printf("Writting file %d", f);
 	      writeGADGETBinaryFile(buffer);	      
 
 	      free(copyPart);
