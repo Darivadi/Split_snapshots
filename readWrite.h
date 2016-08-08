@@ -242,7 +242,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
   printf("File %s is ready to be writen\n", FileNum);
 
   N_tot = GV.NpTot;
-  
+  printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
   
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   fwrite(&Header, sizeof(struct gadget_head), 1, fdata);
