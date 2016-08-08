@@ -255,7 +255,10 @@ int writeGADGETBinaryFile(char FileNum[100]){
   /*********************/
   dummy = 3*N_tot*sizeof(float);
   
+  printf("dummy = %d\n", dummy);
+  
   fwrite(&dummy, sizeof(dummy), 1, fdata);
+  printf("dummy writen\n");
   for(i=0; i<N_tot; i++)
     {      
       faux[X] = copyPart[i].pos[X];

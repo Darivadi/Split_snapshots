@@ -4439,7 +4439,10 @@ int writeGADGETBinaryFile(char FileNum[100]){
 
   dummy = 3*N_tot*sizeof(float);
 
+  printf("dummy = %d\n", dummy);
+
   fwrite(&dummy, sizeof(dummy), 1, fdata);
+  printf("dummy writen\n");
   for(i=0; i<N_tot; i++)
     {
       faux[0] = copyPart[i].pos[0];
@@ -4480,7 +4483,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
 
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 309 "readWrite.h"
+# 312 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4503,7 +4506,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
  }
       N_min=N_max;
     }
-# 356 "readWrite.h"
+# 359 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 
