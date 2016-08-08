@@ -4481,9 +4481,10 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 
 
 
+  printf("Writing masses\n");
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 312 "readWrite.h"
+# 313 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4494,6 +4495,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
      {
        Maux = copyPart[i].mass;
        fwrite(&Maux,sizeof(float),1,fdata);
+       printf("Maux writen\n");
      }
  }
 
@@ -4506,7 +4508,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
  }
       N_min=N_max;
     }
-# 359 "readWrite.h"
+# 361 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 

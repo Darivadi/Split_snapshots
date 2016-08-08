@@ -683,8 +683,12 @@ readGADGETBinaryFile:
 .LC39:
 	.string	"IDs writen"
 .LC40:
-	.string	"Positions writen"
+	.string	"Writing masses"
 .LC41:
+	.string	"Maux writen"
+.LC42:
+	.string	"Positions writen"
+.LC43:
 	.string	"Velocities writen"
 	.text
 	.p2align 4,,15
@@ -800,7 +804,7 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	xorl	%ebx, %ebx
 	call	fwrite
-	movl	$.LC40, %edi
+	movl	$.LC42, %edi
 	call	puts
 	leaq	28(%rsp), %rdi
 	movq	%rbp, %rcx
@@ -826,7 +830,7 @@ writeGADGETBinaryFile:
 	call	fwrite
 	cmpq	%r12, %rbx
 	jne	.L79
-	movl	$.LC41, %edi
+	movl	$.LC43, %edi
 	sall	$2, %r14d
 	xorl	%ebx, %ebx
 	call	puts
@@ -853,6 +857,8 @@ writeGADGETBinaryFile:
 .L80:
 	movl	$.LC39, %edi
 	xorl	%r12d, %r12d
+	call	puts
+	movl	$.LC40, %edi
 	call	puts
 	leaq	28(%rsp), %rdi
 	movl	$1, %edx
@@ -895,6 +901,8 @@ writeGADGETBinaryFile:
 	addq	$32, %rbx
 	movss	%xmm0, (%rsp)
 	call	fwrite
+	movl	$.LC41, %edi
+	call	puts
 	cmpq	%r13, %rbx
 	jne	.L75
 	xorpd	%xmm2, %xmm2
@@ -955,14 +963,14 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	sall	$2, %r14d
 	call	fwrite
-	movl	$.LC40, %edi
+	movl	$.LC42, %edi
 	call	puts
 	leaq	28(%rsp), %rdi
 	movq	%rbp, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
 	call	fwrite
-	movl	$.LC41, %edi
+	movl	$.LC43, %edi
 	call	puts
 	leaq	28(%rsp), %rdi
 	movq	%rbp, %rcx
@@ -988,51 +996,51 @@ writeGADGETBinaryFile:
 	.size	writeGADGETBinaryFile, .-writeGADGETBinaryFile
 	.section	.rodata.str1.8
 	.align 8
-.LC42:
+.LC44:
 	.string	"Error: Incomplete number of parameters. Execute as follows:"
 	.section	.rodata.str1.1
-.LC43:
+.LC45:
 	.string	"%s Parameters_file\n"
-.LC44:
+.LC46:
 	.string	"Reading parameters"
 	.section	.rodata.str1.8
 	.align 8
-.LC47:
+.LC49:
 	.string	"-----------------------------------------------"
 	.section	.rodata.str1.1
-.LC48:
+.LC50:
 	.string	"Cosmological parameters:"
 	.section	.rodata.str1.8
 	.align 8
-.LC49:
+.LC51:
 	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf\n"
 	.section	.rodata.str1.1
-.LC50:
+.LC52:
 	.string	"Filename=%s\n"
 	.section	.rodata.str1.8
 	.align 8
-.LC51:
+.LC53:
 	.string	"Let's begin with the division of files"
 	.section	.rodata.str1.1
-.LC52:
+.LC54:
 	.string	"./Box_400_512_150.%d"
-.LC53:
+.LC55:
 	.string	"Writing file %d\n"
 	.section	.rodata.str1.8
 	.align 8
-.LC54:
+.LC56:
 	.string	"Allocating memory for copyPart"
 	.section	.rodata.str1.1
-.LC55:
+.LC57:
 	.string	"Memory allocated for copyPart"
-.LC56:
+.LC58:
 	.string	"Particle %d\n"
 	.section	.rodata.str1.8
 	.align 8
-.LC57:
+.LC59:
 	.string	"Reallocating memory for copyPart!"
 	.section	.rodata.str1.1
-.LC58:
+.LC60:
 	.string	"File %d was writen\n"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4,,15
@@ -1068,15 +1076,15 @@ main:
 	cmpl	$1, %edi
 	jle	.L123
 	movq	8(%rsi), %rbx
-	movl	$.LC44, %edi
+	movl	$.LC46, %edi
 	call	puts
 	movq	%rbx, %rdi
 	call	read_parameters
 	movss	GV+12(%rip), %xmm0
-	movsd	.LC45(%rip), %xmm1
+	movsd	.LC47(%rip), %xmm1
 	cvtps2pd	%xmm0, %xmm0
 	call	pow
-	movsd	.LC46(%rip), %xmm1
+	movsd	.LC48(%rip), %xmm1
 	xorl	%eax, %eax
 	movsd	%xmm0, 8(%rsp)
 	divsd	%xmm0, %xmm1
@@ -1086,7 +1094,7 @@ main:
 	call	readGADGETBinaryFile
 	movsd	Header+136(%rip), %xmm6
 	movsd	Header+144(%rip), %xmm7
-	movl	$.LC47, %edi
+	movl	$.LC49, %edi
 	movsd	Header+80(%rip), %xmm5
 	movl	%eax, GV+4(%rip)
 	cvtpd2ps	%xmm6, %xmm6
@@ -1105,11 +1113,11 @@ main:
 	movss	%xmm7, GV(%rip)
 	movss	%xmm5, GV+8(%rip)
 	call	puts
-	movl	$.LC48, %edi
+	movl	$.LC50, %edi
 	call	puts
 	movss	GV+1024(%rip), %xmm0
 	movss	GV+1040(%rip), %xmm3
-	movl	$.LC49, %esi
+	movl	$.LC51, %esi
 	movss	GV+1032(%rip), %xmm2
 	movss	GV+1028(%rip), %xmm1
 	movl	$1, %edi
@@ -1119,16 +1127,16 @@ main:
 	cvtps2pd	%xmm2, %xmm2
 	cvtps2pd	%xmm1, %xmm1
 	call	__printf_chk
-	movl	$.LC47, %edi
+	movl	$.LC49, %edi
 	call	puts
 	movl	$GV+24, %edx
-	movl	$.LC50, %esi
+	movl	$.LC52, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	$.LC47, %edi
+	movl	$.LC49, %edi
 	call	puts
-	movl	$.LC51, %edi
+	movl	$.LC53, %edi
 	call	puts
 	movsd	8(%rsp), %xmm4
 	cvttsd2si	%xmm4, %eax
@@ -1156,7 +1164,7 @@ main:
 	movl	24(%rsp), %ebx
 	leaq	64(%rsp), %rdi
 	movl	$1, %edx
-	movl	$.LC52, %r8d
+	movl	$.LC54, %r8d
 	movl	$50, %esi
 	movl	%eax, %ecx
 	movl	%eax, 28(%rsp)
@@ -1240,7 +1248,7 @@ main:
 	cmpl	%edx, %ebp
 	jne	.L101
 	movl	%ebp, %edx
-	movl	$.LC56, %esi
+	movl	$.LC58, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	movss	%xmm3, 8(%rsp)
@@ -1253,7 +1261,7 @@ main:
 	.p2align 3
 .L100:
 	movl	%ebx, %edx
-	movl	$.LC53, %esi
+	movl	$.LC55, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
@@ -1311,7 +1319,7 @@ main:
 .L128:
 	.cfi_restore_state
 	movl	%ebx, %edx
-	movl	$.LC58, %esi
+	movl	$.LC60, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
@@ -1321,23 +1329,23 @@ main:
 .L124:
 	xorl	%eax, %eax
 	movl	%ebx, %edx
-	movl	$.LC53, %esi
+	movl	$.LC55, %esi
 	movl	$1, %edi
 	call	__printf_chk
 	cmpq	$0, copyPart(%rip)
 	jne	.L98
 .L125:
-	movl	$.LC54, %edi
+	movl	$.LC56, %edi
 	call	puts
 	xorl	%edi, %edi
 	movl	$32, %esi
 	call	calloc
-	movl	$.LC55, %edi
+	movl	$.LC57, %edi
 	movq	%rax, copyPart(%rip)
 	call	puts
 	jmp	.L98
 .L127:
-	movl	$.LC57, %edi
+	movl	$.LC59, %edi
 	movss	%xmm3, 56(%rsp)
 	movq	%rdx, 8(%rsp)
 	call	puts
@@ -1373,11 +1381,11 @@ main:
 .L129:
 	call	__stack_chk_fail
 .L123:
-	movl	$.LC42, %edi
+	movl	$.LC44, %edi
 	call	puts
 	movq	(%rbx), %rdx
 	movl	$1, %edi
-	movl	$.LC43, %esi
+	movl	$.LC45, %esi
 	xorl	%eax, %eax
 	call	__printf_chk
 	xorl	%edi, %edi
@@ -1402,11 +1410,11 @@ part:
 	.comm	GV,1044,32
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8
-.LC45:
+.LC47:
 	.long	1431655765
 	.long	1070945621
 	.align 8
-.LC46:
+.LC48:
 	.long	0
 	.long	1072693248
 	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4"
