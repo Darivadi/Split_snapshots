@@ -958,9 +958,23 @@ writeGADGETBinaryFile:
 	.section	.rodata.str1.1
 .LC41:
 	.string	"Filename=%s\n"
+	.section	.rodata.str1.8
+	.align 8
 .LC42:
-	.string	"./Box_400_512_150.%d"
+	.string	"Let's begin with the division of files"
+	.section	.rodata.str1.1
 .LC43:
+	.string	"./Box_400_512_150.%d"
+.LC44:
+	.string	"Writing file %d\n"
+	.section	.rodata.str1.8
+	.align 8
+.LC45:
+	.string	"Allocating memory for copyPart"
+	.section	.rodata.str1.1
+.LC46:
+	.string	"Memory allocated for copyPart"
+.LC47:
 	.string	"File %d was writen\n"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4,,15
@@ -1015,23 +1029,23 @@ main:
 	movsd	Header+136(%rip), %xmm7
 	movsd	Header+144(%rip), %xmm6
 	movl	$.LC38, %edi
-	movsd	Header+32(%rip), %xmm4
 	movl	%eax, GV+4(%rip)
 	cvtpd2ps	%xmm7, %xmm7
 	cvtpd2ps	%xmm6, %xmm6
-	cvtpd2ps	%xmm4, %xmm4
 	movss	%xmm7, GV+1024(%rip)
 	movsd	Header+80(%rip), %xmm7
-	cvtpd2ps	%xmm7, %xmm7
 	movss	%xmm6, GV+1028(%rip)
 	movsd	Header+152(%rip), %xmm6
-	movss	%xmm4, GV+8(%rip)
+	cvtpd2ps	%xmm7, %xmm7
 	cvtpd2ps	%xmm6, %xmm6
 	movss	%xmm7, GV+1032(%rip)
 	movsd	Header+128(%rip), %xmm7
-	cvtpd2ps	%xmm7, %xmm7
 	movss	%xmm6, GV+1040(%rip)
+	movsd	Header+32(%rip), %xmm6
+	cvtpd2ps	%xmm7, %xmm7
+	cvtpd2ps	%xmm6, %xmm6
 	movss	%xmm7, GV(%rip)
+	movss	%xmm6, GV+8(%rip)
 	call	puts
 	movl	$.LC39, %edi
 	call	puts
@@ -1056,6 +1070,8 @@ main:
 	call	__printf_chk
 	movl	$.LC38, %edi
 	call	puts
+	movl	$.LC42, %edi
+	call	puts
 	movsd	(%rsp), %xmm4
 	cvttsd2si	%xmm4, %eax
 	testl	%eax, %eax
@@ -1070,47 +1086,55 @@ main:
 	movl	%eax, 16(%rsp)
 	salq	$5, %rax
 	movq	%rax, 24(%rsp)
-.L112:
+.L113:
 	leal	1(%r14), %eax
-	movl	$1, %ebx
+	movl	$1, %ebp
 	movl	%eax, 20(%rsp)
 	.p2align 4,,10
 	.p2align 3
-.L111:
+.L112:
 	movl	GV+20(%rip), %eax
-	movl	16(%rsp), %ebp
-	leal	-1(%rbx), %r12d
+	movl	16(%rsp), %ebx
+	leal	-1(%rbp), %r12d
 	leaq	48(%rsp), %rdi
-	movl	$.LC42, %r8d
 	movl	$50, %ecx
 	movl	$1, %edx
+	movl	$.LC43, %r8d
 	movl	$50, %esi
-	imull	%eax, %ebp
-	addl	%r14d, %ebp
-	imull	%eax, %ebp
+	imull	%eax, %ebx
+	addl	%r14d, %ebx
+	imull	%eax, %ebx
 	xorl	%eax, %eax
-	addl	%r12d, %ebp
-	movl	%ebp, %r9d
+	addl	%r12d, %ebx
+	movl	%ebx, %r9d
 	call	__snprintf_chk
-	movq	copyPart(%rip), %rdi
-	testq	%rdi, %rdi
+	movss	GV+12(%rip), %xmm0
+	movl	%ebx, %eax
+	cvttss2si	%xmm0, %ecx
+	cltd
+	idivl	%ecx
+	testl	%edx, %edx
 	je	.L124
-.L97:
+	cmpq	$0, copyPart(%rip)
+	je	.L125
+.L98:
 	movl	GV+4(%rip), %eax
 	testl	%eax, %eax
-	jle	.L125
+	jle	.L126
+.L99:
 	cvtsi2ss	16(%rsp), %xmm5
-	movl	%ebx, 12(%rsp)
+	movq	copyPart(%rip), %rdi
 	movss	%xmm5, (%rsp)
+	movl	%ebp, 12(%rsp)
 	xorl	%r13d, %r13d
 	movaps	%xmm5, %xmm2
-	jmp	.L107
+	jmp	.L108
 	.p2align 4,,10
 	.p2align 3
-.L126:
+.L127:
 	movq	%rax, %rdi
 	movss	(%rsp), %xmm2
-.L107:
+.L108:
 	movq	part(%rip), %rcx
 	movq	%r13, %rsi
 	movss	GV+16(%rip), %xmm0
@@ -1119,78 +1143,77 @@ main:
 	leaq	(%rcx,%rsi), %rdx
 	movss	4(%rdx), %xmm1
 	ucomiss	%xmm2, %xmm1
-	jb	.L100
+	jb	.L101
 	cvtsi2ss	%r15d, %xmm2
 	mulss	%xmm0, %xmm2
 	ucomiss	%xmm1, %xmm2
-	jbe	.L100
+	jbe	.L101
 	cvtsi2ss	%r14d, %xmm2
 	movss	8(%rdx), %xmm3
 	mulss	%xmm0, %xmm2
 	ucomiss	%xmm2, %xmm3
-	jb	.L100
+	jb	.L101
 	cvtsi2ss	20(%rsp), %xmm2
 	mulss	%xmm0, %xmm2
 	ucomiss	%xmm3, %xmm2
-	jbe	.L100
+	jbe	.L101
 	cvtsi2ss	%r12d, %xmm2
-	movss	12(%rdx), %xmm3
+	movss	12(%rdx), %xmm4
 	mulss	%xmm0, %xmm2
-	ucomiss	%xmm2, %xmm3
-	jb	.L100
-	cvtsi2ss	%ebx, %xmm2
+	ucomiss	%xmm2, %xmm4
+	jb	.L101
+	cvtsi2ss	%ebp, %xmm2
 	mulss	%xmm0, %xmm2
-	ucomiss	%xmm3, %xmm2
-	jbe	.L100
-	leaq	(%rdi,%rsi), %rax
-	movss	%xmm1, 4(%rax)
-	movss	8(%rcx,%rsi), %xmm0
-	movss	%xmm0, 8(%rax)
-	movq	24(%rsp), %rsi
+	ucomiss	%xmm4, %xmm2
+	jbe	.L101
+	addq	%rdi, %rsi
 	movss	16(%rdx), %xmm0
-	movss	%xmm0, 16(%rax)
-	movl	(%rcx,%rsi), %ecx
-	movss	%xmm3, 12(%rax)
+	movss	%xmm0, 16(%rsi)
+	movss	%xmm1, 4(%rsi)
 	movss	20(%rdx), %xmm0
-	movss	%xmm0, 20(%rax)
+	movss	%xmm0, 20(%rsi)
+	movss	%xmm3, 8(%rsi)
 	movss	24(%rdx), %xmm0
-	movss	%xmm0, 24(%rax)
+	movss	%xmm0, 24(%rsi)
+	movss	%xmm4, 12(%rsi)
+	movq	24(%rsp), %rsi
+	movss	28(%rdx), %xmm0
+	movl	(%rcx,%rsi), %ecx
 	movq	%rsi, %rax
 	addq	%rdi, %rax
-	movss	28(%rdx), %xmm0
 	movss	%xmm0, 28(%rax)
 	movl	%ecx, (%rax)
 	.p2align 4,,10
 	.p2align 3
-.L100:
+.L101:
 	movl	$9, %esi
 	call	realloc
 	leal	1(%r13), %edx
 	addq	$1, %r13
 	cmpl	%edx, GV+4(%rip)
 	movq	%rax, copyPart(%rip)
-	jg	.L126
-.L99:
+	jg	.L127
+.L100:
 	leaq	48(%rsp), %rdi
 	call	writeGADGETBinaryFile
 	movq	copyPart(%rip), %rdi
 	call	free
 	movss	GV+12(%rip), %xmm0
-	movl	%ebp, %eax
+	movl	%ebx, %eax
 	cvttss2si	%xmm0, %ecx
 	cltd
 	idivl	%ecx
 	testl	%edx, %edx
-	je	.L127
-.L108:
-	addl	$1, %ebx
+	je	.L128
+.L109:
+	addl	$1, %ebp
 	movl	12(%rsp), %eax
 	cmpl	%eax, 40(%rsp)
-	jg	.L111
+	jg	.L112
 	movl	40(%rsp), %eax
 	movl	20(%rsp), %r14d
 	cmpl	%eax, %r14d
-	jne	.L112
+	jne	.L113
 	addq	$1, 32(%rsp)
 	addl	$1, %r15d
 	movl	44(%rsp), %eax
@@ -1202,7 +1225,7 @@ main:
 	xorl	%eax, %eax
 	movq	104(%rsp), %rbx
 	xorq	%fs:40, %rbx
-	jne	.L128
+	jne	.L129
 	addq	$120, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
@@ -1221,24 +1244,39 @@ main:
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L127:
+.L124:
 	.cfi_restore_state
-	movl	%ebp, %edx
-	movl	$.LC43, %esi
+	xorl	%eax, %eax
+	movl	%ebx, %edx
+	movl	$.LC44, %esi
+	movl	$1, %edi
+	call	__printf_chk
+	cmpq	$0, copyPart(%rip)
+	jne	.L98
+.L125:
+	movl	$.LC45, %edi
+	call	puts
+	movl	$32, %esi
+	movl	$1, %edi
+	call	calloc
+	movl	$.LC46, %edi
+	movq	%rax, copyPart(%rip)
+	call	puts
+	movl	GV+4(%rip), %eax
+	testl	%eax, %eax
+	jg	.L99
+.L126:
+	movl	%ebp, 12(%rsp)
+	jmp	.L100
+	.p2align 4,,10
+	.p2align 3
+.L128:
+	movl	%ebx, %edx
+	movl	$.LC47, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	jmp	.L108
-.L125:
-	movl	%ebx, 12(%rsp)
-	jmp	.L99
-.L124:
-	movb	$1, %dil
-	movl	$32, %esi
-	call	calloc
-	movq	%rax, copyPart(%rip)
-	movq	%rax, %rdi
-	jmp	.L97
+	jmp	.L109
 .L123:
 	movl	$.LC33, %edi
 	call	puts
@@ -1249,7 +1287,7 @@ main:
 	call	__printf_chk
 	xorl	%edi, %edi
 	call	exit
-.L128:
+.L129:
 	call	__stack_chk_fail
 	.cfi_endproc
 .LFE68:

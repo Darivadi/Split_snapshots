@@ -4581,6 +4581,9 @@ int main(int argc, char *argv[])
 
 
 
+  printf("Let's begin with the division of files\n");
+
+
   for(i=0; i<( (int)auxFiles ); i++)
     {
       for(j=0; j<( (int)auxFiles ); j++)
@@ -4590,10 +4593,17 @@ int main(int argc, char *argv[])
        f = (k)+GV.lengthDivs*((j)+GV.lengthDivs*(i));
        snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", f);
 
+       if(f%((int)GV.NFiles)==0)
+  {
+    printf("Writing file %d\n", f);
+  }
+
 
        if(copyPart == ((void *)0))
   {
+    printf("Allocating memory for copyPart\n");
     copyPart = (struct particle *) calloc((size_t) 1, sizeof(struct particle));
+    printf("Memory allocated for copyPart\n");
   }
 
        for(m=0; m<GV.NpTot; m++)
