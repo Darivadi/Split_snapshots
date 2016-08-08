@@ -4612,6 +4612,10 @@ int main(int argc, char *argv[])
 
        for(m=0; m<GV.NpTot; m++)
   {
+    if(m%50000000==0)
+      {
+        printf("Particle %d\n", m);
+      }
 
     if( (part[m].pos[0] >= (i* GV.SnapLength)) && (part[m].pos[0] < ((i+1)* GV.SnapLength)) )
       {
@@ -4645,7 +4649,7 @@ int main(int argc, char *argv[])
 
   }
 
-       printf("Writting file %d", f);
+       printf("Writing file %d\n", f);
        writeGADGETBinaryFile(buffer);
 
        free(copyPart);
