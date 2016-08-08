@@ -16,7 +16,7 @@ int conf2dump( char filename[] )
     "grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump", 
     filename, filename );
   */
-   nread = system( cmd );
+  system( cmd );
   
   printf("Leaving conf2dump routine\n");
   return 0;
@@ -104,6 +104,7 @@ int readGADGETBinaryFile(){
       printf("Type %d has Npart=%12d NpartTotal=%12d with mass %16.8lf\n", i,
 	     Header.Npart[i], Header.npartTotal[i], Header.mass[i]);
     }//for i 
+
 
   printf(" There is a total %d particles in the snapshot\n\n", N_tot);
   printf("----------------------------------------\n");

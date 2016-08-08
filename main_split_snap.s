@@ -299,7 +299,7 @@ readGADGETBinaryFile:
 	call	fread
 	movq	%rbx, %rcx
 	movl	$1, %edx
-	movl	$208, %esi
+	movl	$256, %esi
 	movl	$Header, %edi
 	call	fread
 	leaq	20(%rsp), %rdi
@@ -316,13 +316,12 @@ readGADGETBinaryFile:
 	.p2align 4,,10
 	.p2align 3
 .L16:
-	movss	Header+24(,%rbp,4), %xmm0
-	movl	Header+64(,%rbp,4), %r8d
+	movl	Header+96(,%rbp,4), %r8d
 	movl	Header(,%rbp,4), %ecx
 	movl	%ebp, %edx
+	movsd	Header+24(,%rbp,8), %xmm0
 	movl	$.LC17, %esi
 	movl	$1, %edi
-	cvtps2pd	%xmm0, %xmm0
 	movl	$1, %eax
 	addq	$1, %rbp
 	addl	%r8d, %r12d
@@ -336,61 +335,55 @@ readGADGETBinaryFile:
 	call	__printf_chk
 	movl	$.LC15, %edi
 	call	puts
-	movss	Header+48(%rip), %xmm0
+	movsd	Header+72(%rip), %xmm0
 	movl	$.LC19, %esi
 	movl	$1, %edi
 	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+52(%rip), %xmm0
+	movsd	Header+80(%rip), %xmm0
 	movl	$.LC20, %esi
 	movl	$1, %edi
 	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movl	Header+56(%rip), %edx
+	movl	Header+88(%rip), %edx
 	movl	$.LC21, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	Header+60(%rip), %edx
+	movl	Header+92(%rip), %edx
 	movl	$.LC22, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	Header+88(%rip), %edx
+	movl	Header+120(%rip), %edx
 	movl	$.LC23, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movl	Header+92(%rip), %edx
+	movl	Header+124(%rip), %edx
 	movl	$.LC24, %esi
 	movl	$1, %edi
 	xorl	%eax, %eax
 	call	__printf_chk
-	movss	Header+96(%rip), %xmm0
+	movsd	Header+128(%rip), %xmm0
 	movl	$.LC25, %esi
 	movl	$1, %edi
 	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+100(%rip), %xmm0
+	movsd	Header+136(%rip), %xmm0
 	movl	$.LC26, %esi
 	movl	$1, %edi
 	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+104(%rip), %xmm0
+	movsd	Header+144(%rip), %xmm0
 	movl	$.LC27, %esi
 	movl	$1, %edi
 	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
-	movss	Header+108(%rip), %xmm0
+	movsd	Header+152(%rip), %xmm0
 	movl	$.LC28, %esi
 	movl	$1, %edi
 	movl	$1, %eax
-	cvtps2pd	%xmm0, %xmm0
 	call	__printf_chk
 	movslq	%r12d, %rax
 	movl	$32, %esi
@@ -526,16 +519,16 @@ readGADGETBinaryFile:
 	movq	%rbx, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
-	movl	$Header+64, %ebp
+	xorl	%ebp, %ebp
 	call	fread
 	xorl	%eax, %eax
 	.p2align 4,,10
 	.p2align 3
 .L44:
-	xorps	%xmm1, %xmm1
-	movss	-40(%rbp), %xmm0
-	movl	0(%rbp), %edx
-	ucomiss	%xmm1, %xmm0
+	xorpd	%xmm1, %xmm1
+	movl	Header+96(%rbp), %edx
+	movsd	Header+24(%rbp,%rbp), %xmm0
+	ucomisd	%xmm1, %xmm0
 	leal	(%rdx,%rax), %r14d
 	jp	.L33
 	jne	.L33
@@ -546,11 +539,11 @@ readGADGETBinaryFile:
 	jle	.L38
 	movslq	%eax, %rsi
 	notl	%eax
-	movl	%eax, 12(%rsp)
+	movl	%eax, (%rsp)
 	addl	%r14d, %eax
 	movq	%rsi, %r15
 	leaq	1(%rax,%rsi), %r13
-	movq	%rsi, (%rsp)
+	movq	%rsi, 8(%rsp)
 	salq	$5, %r15
 	salq	$5, %r13
 	.p2align 4,,10
@@ -567,14 +560,14 @@ readGADGETBinaryFile:
 	addq	$32, %r15
 	cmpq	%r13, %r15
 	jne	.L40
-	xorps	%xmm2, %xmm2
-	movss	-40(%rbp), %xmm0
-	ucomiss	%xmm2, %xmm0
+	xorpd	%xmm2, %xmm2
+	movsd	Header+24(%rbp,%rbp), %xmm0
+	ucomisd	%xmm2, %xmm0
 	jp	.L46
 	jne	.L46
 .L38:
 	addq	$4, %rbp
-	cmpq	$Header+88, %rbp
+	cmpq	$24, %rbp
 	je	.L59
 .L36:
 	movl	%r14d, %eax
@@ -590,11 +583,13 @@ readGADGETBinaryFile:
 	movq	part(%rip), %rdx
 	movslq	%eax, %rcx
 	notl	%eax
-	movq	%rcx, (%rsp)
-	movl	%eax, 12(%rsp)
+	movq	%rcx, 8(%rsp)
+	movl	%eax, (%rsp)
 .L42:
-	movl	12(%rsp), %esi
-	movq	(%rsp), %r15
+	unpcklpd	%xmm0, %xmm0
+	movl	(%rsp), %esi
+	movq	8(%rsp), %r15
+	cvtpd2ps	%xmm0, %xmm0
 	leal	(%rsi,%r14), %ecx
 	movq	%r15, %rax
 	salq	$5, %rax
@@ -610,7 +605,7 @@ readGADGETBinaryFile:
 	cmpq	%rdx, %rax
 	jne	.L43
 	addq	$4, %rbp
-	cmpq	$Header+88, %rbp
+	cmpq	$24, %rbp
 	jne	.L36
 .L59:
 	leaq	20(%rsp), %rdi
@@ -651,7 +646,7 @@ readGADGETBinaryFile:
 	xorl	%edi, %edi
 	call	exit
 .L46:
-	movl	0(%rbp), %eax
+	movl	Header+96(%rbp), %eax
 	testl	%eax, %eax
 	jne	.L42
 	jmp	.L38
@@ -718,7 +713,7 @@ writeGADGETBinaryFile:
 	leal	(%r14,%r14,2), %r13d
 	movq	%rbp, %rcx
 	movl	$1, %edx
-	movl	$208, %esi
+	movl	$256, %esi
 	movl	$Header, %edi
 	call	fwrite
 	movq	%rbp, %rcx
@@ -816,16 +811,16 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rsp, %rdi
 	movl	%r13d, (%rsp)
-	movl	$Header+64, %r12d
+	xorl	%r12d, %r12d
 	call	fwrite
 	xorl	%edx, %edx
 	.p2align 4,,10
 	.p2align 3
 .L78:
-	xorps	%xmm1, %xmm1
-	movss	-40(%r12), %xmm0
-	movl	(%r12), %eax
-	ucomiss	%xmm1, %xmm0
+	xorpd	%xmm1, %xmm1
+	movl	Header+96(%r12), %eax
+	movsd	Header+24(%r12,%r12), %xmm0
+	ucomisd	%xmm1, %xmm0
 	leal	(%rax,%rdx), %r14d
 	jp	.L68
 	jne	.L68
@@ -855,14 +850,14 @@ writeGADGETBinaryFile:
 	call	fwrite
 	cmpq	%r13, %rbx
 	jne	.L75
-	xorps	%xmm2, %xmm2
-	movss	-40(%r12), %xmm0
-	ucomiss	%xmm2, %xmm0
+	xorpd	%xmm2, %xmm2
+	movsd	Header+24(%r12,%r12), %xmm0
+	ucomisd	%xmm2, %xmm0
 	jp	.L83
 	jne	.L83
 .L73:
 	addq	$4, %r12
-	cmpq	$Header+88, %r12
+	cmpq	$24, %r12
 	je	.L92
 .L71:
 	movl	%r14d, %edx
@@ -876,9 +871,11 @@ writeGADGETBinaryFile:
 	.p2align 4,,3
 	jle	.L73
 .L77:
+	unpcklpd	%xmm0, %xmm0
 	addq	$4, %r12
-	movss	%xmm0, 16(%rsp)
-	cmpq	$Header+88, %r12
+	cmpq	$24, %r12
+	cvtpd2ps	%xmm0, %xmm3
+	movss	%xmm3, 16(%rsp)
 	jne	.L71
 .L92:
 	movq	%rbp, %rcx
@@ -931,10 +928,9 @@ writeGADGETBinaryFile:
 	call	__printf_chk
 	jmp	.L61
 .L83:
-	movl	(%r12), %eax
+	movl	Header+96(%r12), %eax
 	testl	%eax, %eax
 	jne	.L77
-	.p2align 4,,5
 	jmp	.L73
 	.cfi_endproc
 .LFE67:
@@ -1016,20 +1012,26 @@ main:
 	cvtpd2ps	%xmm1, %xmm6
 	movss	%xmm6, GV+16(%rip)
 	call	readGADGETBinaryFile
-	movss	Header+100(%rip), %xmm0
+	movsd	Header+136(%rip), %xmm7
+	movsd	Header+144(%rip), %xmm6
 	movl	$.LC38, %edi
-	movss	%xmm0, GV+1024(%rip)
+	movsd	Header+32(%rip), %xmm4
 	movl	%eax, GV+4(%rip)
-	movss	Header+104(%rip), %xmm0
-	movss	%xmm0, GV+1028(%rip)
-	movss	Header+52(%rip), %xmm0
-	movss	%xmm0, GV+1032(%rip)
-	movss	Header+108(%rip), %xmm0
-	movss	%xmm0, GV+1040(%rip)
-	movss	Header+96(%rip), %xmm0
-	movss	%xmm0, GV(%rip)
-	movss	Header+28(%rip), %xmm0
-	movss	%xmm0, GV+8(%rip)
+	cvtpd2ps	%xmm7, %xmm7
+	cvtpd2ps	%xmm6, %xmm6
+	cvtpd2ps	%xmm4, %xmm4
+	movss	%xmm7, GV+1024(%rip)
+	movsd	Header+80(%rip), %xmm7
+	cvtpd2ps	%xmm7, %xmm7
+	movss	%xmm6, GV+1028(%rip)
+	movsd	Header+152(%rip), %xmm6
+	movss	%xmm4, GV+8(%rip)
+	cvtpd2ps	%xmm6, %xmm6
+	movss	%xmm7, GV+1032(%rip)
+	movsd	Header+128(%rip), %xmm7
+	cvtpd2ps	%xmm7, %xmm7
+	movss	%xmm6, GV+1040(%rip)
+	movss	%xmm7, GV(%rip)
 	call	puts
 	movl	$.LC39, %edi
 	call	puts
@@ -1252,7 +1254,7 @@ main:
 	.cfi_endproc
 .LFE68:
 	.size	main, .-main
-	.comm	Header,208,32
+	.comm	Header,256,32
 	.globl	copyPart
 	.bss
 	.align 16

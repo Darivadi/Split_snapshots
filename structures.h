@@ -40,18 +40,18 @@ struct particle
 struct gadget_head
 {
   int      Npart[6];
-  float   mass[6];
-  float   time;
-  float   redshift;
+  double   mass[6];
+  double   time;
+  double   redshift;
   int      flag_sfr;
   int      flag_feedback;
   int      npartTotal[6];
   int      flag_cooling;
   int      num_files;
-  float   BoxSize;
-  float   Omega0;
-  float   OmegaLambda;
-  float   HubbleParam; 
+  double   BoxSize;
+  double   Omega0;
+  double   OmegaLambda;
+  double   HubbleParam; 
   char     fill[256- 6*4- 6*8- 2*8- 2*4- 6*4- 2*4 - 4*8];  /* fills to 
 							      256 Bytes */
 }Header;

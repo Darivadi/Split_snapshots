@@ -4185,18 +4185,18 @@ struct particle
 struct gadget_head
 {
   int Npart[6];
-  float mass[6];
-  float time;
-  float redshift;
+  double mass[6];
+  double time;
+  double redshift;
   int flag_sfr;
   int flag_feedback;
   int npartTotal[6];
   int flag_cooling;
   int num_files;
-  float BoxSize;
-  float Omega0;
-  float OmegaLambda;
-  float HubbleParam;
+  double BoxSize;
+  double Omega0;
+  double OmegaLambda;
+  double HubbleParam;
   char fill[256- 6*4- 6*8- 2*8- 2*4- 6*4- 2*4 - 4*8];
 
 }Header;
@@ -4220,7 +4220,7 @@ int conf2dump( char filename[] )
 
 
 
-   nread = system( cmd );
+  system( cmd );
 
   printf("Leaving conf2dump routine\n");
   return 0;
@@ -4300,6 +4300,7 @@ int readGADGETBinaryFile(){
       printf("Type %d has Npart=%12d NpartTotal=%12d with mass %16.8lf\n", i,
       Header.Npart[i], Header.npartTotal[i], Header.mass[i]);
     }
+
 
   printf(" There is a total %d particles in the snapshot\n\n", N_tot);
   printf("----------------------------------------\n");
@@ -4405,7 +4406,7 @@ int readGADGETBinaryFile(){
   fclose(fdata);
   return N_tot;
 }
-# 225 "readWrite.h"
+# 226 "readWrite.h"
 int writeGADGETBinaryFile(char FileNum[100]){
   FILE *fdata = ((void *)0);
   int i, j;
@@ -4475,7 +4476,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
 
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 304 "readWrite.h"
+# 305 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4498,7 +4499,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
  }
       N_min=N_max;
     }
-# 351 "readWrite.h"
+# 352 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 
