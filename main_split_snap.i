@@ -4212,6 +4212,7 @@ int conf2dump( char filename[] )
 
 
 
+    printf("Inside conf2dump routine\n");
     sprintf( cmd,
       "grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump",
       filename, filename );
@@ -4262,7 +4263,7 @@ int read_parameters( char filename[] )
 
     return 0;
 }
-# 70 "readWrite.h"
+# 71 "readWrite.h"
 int readGADGETBinaryFile(){
   FILE *fdata = ((void *)0);
   int i, j;
@@ -4399,7 +4400,7 @@ int readGADGETBinaryFile(){
   fclose(fdata);
   return N_tot;
 }
-# 219 "readWrite.h"
+# 220 "readWrite.h"
 int writeGADGETBinaryFile(char FileNum[100]){
   FILE *fdata = ((void *)0);
   int i, j;
@@ -4469,7 +4470,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
 
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 298 "readWrite.h"
+# 299 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4492,7 +4493,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
  }
       N_min=N_max;
     }
-# 345 "readWrite.h"
+# 346 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 

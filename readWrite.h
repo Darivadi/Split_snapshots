@@ -8,6 +8,7 @@ int conf2dump( char filename[] )
     "grep -v \"#\" %s | grep -v \"^$\" | gawk -F\"=\" '{print $2}' > %s.dump", 
 	filename, filename );
     */
+    printf("Inside conf2dump routine\n");
     sprintf( cmd, 
 	     "grep -v \"#\" %s | grep -v \"^$\" | awk -F\"=\" '{print $2}' > %s.dump", 
 	     filename, filename );
