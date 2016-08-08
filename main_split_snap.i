@@ -4432,6 +4432,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
   fwrite(&Header, sizeof(struct gadget_head), 1, fdata);
   fwrite(&dummy, sizeof(dummy), 1, fdata);
 
+  printf("Header writen\n");
 
 
 
@@ -4448,6 +4449,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
     }
   nread=fwrite(&dummy, sizeof(dummy), 1, fdata);
 
+  printf("Positions writen\n");
 
 
 
@@ -4459,7 +4461,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
       faux[2] = copyPart[i].vel[2];
       fwrite(&faux[0],sizeof(float),3,fdata);
     }
-
+  printf("Velocities writen\n");
 
 
 
@@ -4471,14 +4473,14 @@ int writeGADGETBinaryFile(char FileNum[100]){
       uintaux = copyPart[i].id;
       nread=fwrite(&uintaux, sizeof(unsigned int), 1, fdata);
     }
-
+  printf("IDs writen\n");
 
 
 
 
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-# 307 "readWrite.h"
+# 309 "readWrite.h"
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -4501,7 +4503,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
  }
       N_min=N_max;
     }
-# 354 "readWrite.h"
+# 356 "readWrite.h"
   fwrite(&dummy,sizeof(dummy),1,fdata);
   fclose(fdata);
 
@@ -4513,7 +4515,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
 int main(int argc, char *argv[])
 {
   char *infile=((void *)0);
-  int f, m;
+  int f, m, partsCount = 0;
   char NFilename[100];
   char buffer[50];
   double auxFiles;
@@ -4604,7 +4606,7 @@ int main(int argc, char *argv[])
        if(copyPart == ((void *)0))
   {
     printf("Allocating memory for copyPart\n");
-    copyPart = (struct particle *) calloc((size_t) 1, sizeof(struct particle));
+    copyPart = (struct particle *) calloc((size_t) 0, sizeof(struct particle));
     printf("Memory allocated for copyPart\n");
   }
 
@@ -4618,6 +4620,10 @@ int main(int argc, char *argv[])
      if( (part[m].pos[2] >= (k* GV.SnapLength)) && (part[m].pos[2] < ((k+1)* GV.SnapLength)) )
        {
 
+         printf("Reallocating memory for copyPart!\n");
+         copyPart = (struct particle *) realloc(copyPart, sizeof(copyPart) + 1);
+
+
          copyPart[m].pos[0] = part[m].pos[0];
          copyPart[m].pos[1] = part[m].pos[1];
          copyPart[m].pos[2] = part[m].pos[2];
@@ -4630,11 +4636,12 @@ int main(int argc, char *argv[])
          copyPart[i].id = part[i].id;
          copyPart[i].mass = part[m].mass;
 
+         partsCount++;
        }
    }
       }
 
-    copyPart = (struct particle *) realloc(copyPart, sizeof(copyPart) + 1);
+
 
   }
 

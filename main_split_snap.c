@@ -14,7 +14,7 @@
 int main(int argc, char *argv[])
 {  
   char *infile=NULL;
-  int f, m;
+  int f, m, partsCount = 0;
   char NFilename[100];
   char buffer[50];
   double auxFiles;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 	      if(copyPart == NULL)
 		{
 		  printf("Allocating memory for copyPart\n");
-		  copyPart = (struct particle *) calloc((size_t) 1, sizeof(struct particle));
+		  copyPart = (struct particle *) calloc((size_t) 0, sizeof(struct particle));
 		  printf("Memory allocated for copyPart\n");
 		}    	      
 	      
@@ -118,6 +118,10 @@ int main(int argc, char *argv[])
 			{
 			  if( (part[m].pos[Z] >= (k* GV.SnapLength)) &&  (part[m].pos[Z] < ((k+1)* GV.SnapLength))  )
 			    {
+			      
+			      printf("Reallocating memory for copyPart!\n");
+			      copyPart = (struct particle *) realloc(copyPart, sizeof(copyPart) + 1);
+			      
 			      /*..... Copying positions .....*/
 			      copyPart[m].pos[X] = part[m].pos[X];
 			      copyPart[m].pos[Y] = part[m].pos[Y];
@@ -131,11 +135,12 @@ int main(int argc, char *argv[])
 			      copyPart[i].id = part[i].id;
 			      copyPart[i].mass = part[m].mass;
 			      
+			      partsCount++;
 			    }//if z			  
 			}//if y		      
 		    }//if x
 
-		  copyPart = (struct particle *) realloc(copyPart, sizeof(copyPart) + 1);
+		  
 		  
 		}//for m	      
 	      

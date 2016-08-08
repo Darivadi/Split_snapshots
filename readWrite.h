@@ -264,7 +264,8 @@ int writeGADGETBinaryFile(char FileNum[100]){
       fwrite(&faux[0], sizeof(float), 3, fdata);
     }//for i
   nread=fwrite(&dummy, sizeof(dummy), 1, fdata);
-    
+  
+  printf("Positions writen\n");
   /**********************/
   /* Velocities */
   /**********************/
@@ -276,7 +277,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
       faux[Z] = copyPart[i].vel[Z];
       fwrite(&faux[0],sizeof(float),3,fdata);
     }//for i
-  
+  printf("Velocities writen\n");
     
   /****************/
   /* ID's */
@@ -288,7 +289,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
       uintaux = copyPart[i].id;
       nread=fwrite(&uintaux, sizeof(unsigned int), 1, fdata);
     }//for i
-  
+  printf("IDs writen\n");
   
   /******************/
   /* Getting masses */
