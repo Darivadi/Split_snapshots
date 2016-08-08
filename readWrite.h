@@ -248,6 +248,7 @@ int writeGADGETBinaryFile(char FileNum[100]){
   fwrite(&Header, sizeof(struct gadget_head), 1, fdata);
   fwrite(&dummy, sizeof(dummy), 1, fdata);
 
+  printf("Header writen\n");
 
   /*********************/
   /* Positions */
