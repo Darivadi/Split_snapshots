@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 	      // Memory allocation for part variable
 	      if(copyPart == NULL)
 		{
-		  printf("Allocating memory for copyPart\n");
+		  printf("Allocating memory for copyPart\n");		  
 		  copyPart = (struct particle *) calloc((size_t) 0, sizeof(struct particle));
 		  printf("Memory allocated for copyPart\n");
 		}    	      
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 			  if( (part[m].pos[Z] >= (k* GV.SnapLength)) &&  (part[m].pos[Z] < ((k+1)* GV.SnapLength))  )
 			    {
 			      
-			      printf("Reallocating memory for copyPart!\n");
+			      printf("Reallocating memory for copyPart!\n");			      
 			      copyPart = (struct particle *) realloc(copyPart, sizeof(copyPart) + 1);
 			      
 			      /*..... Copying positions .....*/
@@ -151,6 +151,7 @@ int main(int argc, char *argv[])
 	      printf("Writing file %d\n", f);
 	      writeGADGETBinaryFile(buffer, partsCount);	      
 
+	      
 	      free(copyPart);
 
 	      

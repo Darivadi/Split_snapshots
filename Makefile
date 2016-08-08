@@ -1,6 +1,6 @@
 CC = gcc
-#CFLAGS = -g -Wall -I/home/$(USER)/libs/include/ -DCIC -DBINARYDATA
-CFLAGS = -c -O3 -I/home/$(USER)/libs/include/ -DCIC -DBINARYDATA
+CFLAGS = -g -Wall -I/home/$(USER)/libs/include/ -DCIC -DBINARYDATA
+#CFLAGS = -c -O3 -I/home/$(USER)/libs/include/ -DCIC -DBINARYDATA
 LFLAGS = -L/home/$(USER)/libs/lib
 PROGRAM = main_split_snap
 #PROGRAM = CIC_plot_dens
