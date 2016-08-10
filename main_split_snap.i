@@ -3648,8 +3648,7 @@ int main(int argc, char *argv[])
   read_parameters(infile);
 
 
-  auxFiles = pow(GV.NFiles, 1.0/3.0);
-  GV.SnapLength = 1.0 / auxFiles;
+  GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
 
 
   GV.NpTot = readGADGETBinaryFile();

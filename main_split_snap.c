@@ -50,9 +50,8 @@ int main(int argc, char *argv[])
   printf("Reading parameters\n");
   read_parameters(infile);
   
-  /*+++++ Transforming the number of files to separation in one axis +++++*/
-  auxFiles = pow(GV.NFiles, 1.0/3.0);
-  GV.SnapLength = 1.0 / auxFiles;
+  /*+++++ Transforming the number of files to separation in one axis +++++*/  
+  GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
 
   /*+++++ Reading original GADGET snapshot +++++*/
   GV.NpTot = readGADGETBinaryFile();
