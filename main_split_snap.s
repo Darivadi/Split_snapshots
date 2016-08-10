@@ -1317,44 +1317,44 @@ writeGADGETBinaryFile:
 .LC46:
 	.string	"Reading parameters"
 	.align 8
-.LC47:
-	.string	"-----------------------------------------------"
 .LC48:
+	.string	"-----------------------------------------------"
+.LC49:
 	.string	"Cosmological parameters:"
 	.align 8
-.LC49:
-	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf SnapLength=%lf\n"
 .LC50:
+	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf SnapLength=%lf\n"
+.LC51:
 	.string	"Filename=%s\n"
 	.align 8
-.LC51:
-	.string	"Let's begin with the division of files"
 .LC52:
-	.string	"./Box_400_512_150.%d"
+	.string	"Let's begin with the division of files"
 .LC53:
-	.string	"Writing file %d\n"
+	.string	"./Box_400_512_150.%d"
 .LC54:
+	.string	"Writing file %d\n"
+.LC55:
 	.string	"i=%d j=%d k=%d f=%d\n"
 	.align 8
-.LC55:
+.LC56:
 	.string	"i* GV.SnapLength= %lf, (i+1)* GV.SnapLength= %lf\n"
 	.align 8
-.LC56:
+.LC57:
 	.string	"j* GV.SnapLength= %lf, (j+1)* GV.SnapLength= %lf\n"
 	.align 8
-.LC57:
+.LC58:
 	.string	"k* GV.SnapLength= %lf, (k+1)* GV.SnapLength= %lf\n"
 	.align 8
-.LC58:
-	.string	"Allocating memory for copyPart"
 .LC59:
-	.string	"Memory allocated for copyPart"
+	.string	"Allocating memory for copyPart"
 .LC60:
+	.string	"Memory allocated for copyPart"
+.LC61:
 	.string	"Particle %d\n"
 	.align 8
-.LC61:
-	.string	"Reallocating memory for copyPart!"
 .LC62:
+	.string	"Reallocating memory for copyPart!"
+.LC63:
 	.string	"File %d was writen\n"
 	.text
 	.globl	main
@@ -1420,6 +1420,9 @@ main:
 	movq	%rax, %rdi
 	call	read_parameters
 	.loc 2 54 0
+	movl	.LC47(%rip), %eax
+	movl	%eax, GV(%rip)
+	.loc 2 55 0
 	movss	GV(%rip), %xmm0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm0
@@ -1429,101 +1432,101 @@ main:
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+16(%rip)
-	.loc 2 57 0
+	.loc 2 58 0
 	movl	$0, %eax
 	call	readGADGETBinaryFile
 	movl	%eax, GV+4(%rip)
-	.loc 2 60 0
+	.loc 2 61 0
 	movsd	Header+136(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1024(%rip)
-	.loc 2 61 0
+	.loc 2 62 0
 	movsd	Header+144(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1028(%rip)
-	.loc 2 62 0
+	.loc 2 63 0
 	movsd	Header+80(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1032(%rip)
-	.loc 2 63 0
+	.loc 2 64 0
 	movsd	Header+152(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1040(%rip)
-	.loc 2 66 0
+	.loc 2 67 0
 	movsd	Header+128(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV(%rip)
-	.loc 2 67 0
+	.loc 2 68 0
 	movsd	Header+32(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+8(%rip)
-	.loc 2 69 0
-	movl	$.LC47, %edi
-	call	puts
 	.loc 2 70 0
 	movl	$.LC48, %edi
 	call	puts
-	.loc 2 76 0
-	movss	GV+16(%rip), %xmm0
 	.loc 2 71 0
+	movl	$.LC49, %edi
+	call	puts
+	.loc 2 77 0
+	movss	GV+16(%rip), %xmm0
+	.loc 2 72 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm4
-	.loc 2 75 0
+	.loc 2 76 0
 	movss	GV+1040(%rip), %xmm0
-	.loc 2 71 0
+	.loc 2 72 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm3
-	.loc 2 74 0
+	.loc 2 75 0
 	movss	GV+1032(%rip), %xmm0
-	.loc 2 71 0
+	.loc 2 72 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm2
-	.loc 2 73 0
+	.loc 2 74 0
 	movss	GV+1028(%rip), %xmm0
-	.loc 2 71 0
+	.loc 2 72 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm1
-	.loc 2 72 0
+	.loc 2 73 0
 	movss	GV+1024(%rip), %xmm0
-	.loc 2 71 0
+	.loc 2 72 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC49, %edi
+	movl	$.LC50, %edi
 	movl	$5, %eax
 	call	printf
-	.loc 2 77 0
-	movl	$.LC47, %edi
+	.loc 2 78 0
+	movl	$.LC48, %edi
 	call	puts
-	.loc 2 79 0
+	.loc 2 80 0
 	movl	$GV+24, %esi
-	movl	$.LC50, %edi
+	movl	$.LC51, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 2 80 0
-	movl	$.LC47, %edi
+	.loc 2 81 0
+	movl	$.LC48, %edi
 	call	puts
-	.loc 2 87 0
-	movl	$.LC51, %edi
+	.loc 2 88 0
+	movl	$.LC52, %edi
 	call	puts
-	.loc 2 90 0
+	.loc 2 91 0
 	movl	$0, -220(%rbp)
 	jmp	.L59
 .L77:
-	.loc 2 92 0
+	.loc 2 93 0
 	movl	$0, -216(%rbp)
 	jmp	.L60
 .L76:
-	.loc 2 94 0
+	.loc 2 95 0
 	movl	$0, -212(%rbp)
 	jmp	.L61
 .L75:
-	.loc 2 96 0
+	.loc 2 97 0
 	movl	GV+20(%rip), %edx
 	movl	GV+20(%rip), %eax
 	imull	-220(%rbp), %eax
@@ -1534,16 +1537,16 @@ main:
 	movl	-212(%rbp), %eax
 	addl	%edx, %eax
 	movl	%eax, -204(%rbp)
-	.loc 2 97 0
+	.loc 2 98 0
 	movl	-204(%rbp), %edx
 	leaq	-128(%rbp), %rax
 	movl	%edx, %ecx
-	movl	$.LC52, %edx
+	movl	$.LC53, %edx
 	movl	$50, %esi
 	movq	%rax, %rdi
 	movl	$0, %eax
 	call	snprintf
-	.loc 2 99 0
+	.loc 2 100 0
 	movss	GV+12(%rip), %xmm0
 	cvttss2si	%xmm0, %ecx
 	movl	-204(%rbp), %eax
@@ -1552,101 +1555,101 @@ main:
 	movl	%edx, %eax
 	testl	%eax, %eax
 	jne	.L62
-	.loc 2 101 0
+	.loc 2 102 0
 	movl	-204(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC53, %edi
+	movl	$.LC54, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 2 102 0
+	.loc 2 103 0
 	movl	-204(%rbp), %esi
 	movl	-212(%rbp), %ecx
 	movl	-216(%rbp), %edx
 	movl	-220(%rbp), %eax
 	movl	%esi, %r8d
 	movl	%eax, %esi
-	movl	$.LC54, %edi
+	movl	$.LC55, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 2 104 0
+	.loc 2 105 0
 	movl	-220(%rbp), %eax
 	addl	$1, %eax
 	cvtsi2ss	%eax, %xmm0
 	movss	GV+16(%rip), %xmm1
 	mulss	%xmm1, %xmm0
-	.loc 2 103 0
+	.loc 2 104 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm1
-	.loc 2 104 0
+	.loc 2 105 0
 	cvtsi2ss	-220(%rbp), %xmm0
 	movss	GV+16(%rip), %xmm2
 	mulss	%xmm2, %xmm0
-	.loc 2 103 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC55, %edi
-	movl	$2, %eax
-	call	printf
-	.loc 2 106 0
-	movl	-216(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm1
-	mulss	%xmm1, %xmm0
-	.loc 2 105 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm1
-	.loc 2 106 0
-	cvtsi2ss	-216(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	.loc 2 105 0
+	.loc 2 104 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm0
 	movl	$.LC56, %edi
 	movl	$2, %eax
 	call	printf
-	.loc 2 108 0
-	movl	-212(%rbp), %eax
+	.loc 2 107 0
+	movl	-216(%rbp), %eax
 	addl	$1, %eax
 	cvtsi2ss	%eax, %xmm0
 	movss	GV+16(%rip), %xmm1
 	mulss	%xmm1, %xmm0
-	.loc 2 107 0
+	.loc 2 106 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm1
-	.loc 2 108 0
-	cvtsi2ss	-212(%rbp), %xmm0
+	.loc 2 107 0
+	cvtsi2ss	-216(%rbp), %xmm0
 	movss	GV+16(%rip), %xmm2
 	mulss	%xmm2, %xmm0
-	.loc 2 107 0
+	.loc 2 106 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm0
 	movl	$.LC57, %edi
 	movl	$2, %eax
 	call	printf
+	.loc 2 109 0
+	movl	-212(%rbp), %eax
+	addl	$1, %eax
+	cvtsi2ss	%eax, %xmm0
+	movss	GV+16(%rip), %xmm1
+	mulss	%xmm1, %xmm0
+	.loc 2 108 0
+	unpcklps	%xmm0, %xmm0
+	cvtps2pd	%xmm0, %xmm1
+	.loc 2 109 0
+	cvtsi2ss	-212(%rbp), %xmm0
+	movss	GV+16(%rip), %xmm2
+	mulss	%xmm2, %xmm0
+	.loc 2 108 0
+	unpcklps	%xmm0, %xmm0
+	cvtps2pd	%xmm0, %xmm0
+	movl	$.LC58, %edi
+	movl	$2, %eax
+	call	printf
 .L62:
-	.loc 2 112 0
+	.loc 2 113 0
 	movq	copyPart(%rip), %rax
 	testq	%rax, %rax
 	jne	.L63
-	.loc 2 114 0
-	movl	$.LC58, %edi
-	call	puts
 	.loc 2 115 0
+	movl	$.LC59, %edi
+	call	puts
+	.loc 2 116 0
 	movl	$32, %esi
 	movl	$0, %edi
 	call	calloc
 	movq	%rax, copyPart(%rip)
-	.loc 2 116 0
-	movl	$.LC59, %edi
+	.loc 2 117 0
+	movl	$.LC60, %edi
 	call	puts
 .L63:
-	.loc 2 119 0
+	.loc 2 120 0
 	movl	$0, -228(%rbp)
 	jmp	.L64
 .L73:
-	.loc 2 121 0
+	.loc 2 122 0
 	movl	-228(%rbp), %ecx
 	movl	$1441151881, %edx
 	movl	%ecx, %eax
@@ -1661,14 +1664,14 @@ main:
 	movl	%ecx, %eax
 	testl	%eax, %eax
 	jne	.L65
-	.loc 2 123 0
+	.loc 2 124 0
 	movl	-228(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC60, %edi
+	movl	$.LC61, %edi
 	movl	$0, %eax
 	call	printf
 .L65:
-	.loc 2 126 0
+	.loc 2 127 0
 	movq	part(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1680,7 +1683,7 @@ main:
 	mulss	%xmm2, %xmm0
 	ucomiss	%xmm0, %xmm1
 	jb	.L66
-	.loc 2 126 0 is_stmt 0 discriminator 1
+	.loc 2 127 0 is_stmt 0 discriminator 1
 	movq	part(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1694,7 +1697,7 @@ main:
 	mulss	%xmm2, %xmm0
 	ucomiss	%xmm1, %xmm0
 	jbe	.L66
-	.loc 2 128 0 is_stmt 1
+	.loc 2 129 0 is_stmt 1
 	movq	part(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1706,7 +1709,7 @@ main:
 	mulss	%xmm2, %xmm0
 	ucomiss	%xmm0, %xmm1
 	jb	.L66
-	.loc 2 128 0 is_stmt 0 discriminator 1
+	.loc 2 129 0 is_stmt 0 discriminator 1
 	movq	part(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1720,7 +1723,7 @@ main:
 	mulss	%xmm2, %xmm0
 	ucomiss	%xmm1, %xmm0
 	jbe	.L66
-	.loc 2 130 0 is_stmt 1
+	.loc 2 131 0 is_stmt 1
 	movq	part(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1732,7 +1735,7 @@ main:
 	mulss	%xmm2, %xmm0
 	ucomiss	%xmm0, %xmm1
 	jb	.L66
-	.loc 2 130 0 is_stmt 0 discriminator 1
+	.loc 2 131 0 is_stmt 0 discriminator 1
 	movq	part(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1746,16 +1749,16 @@ main:
 	mulss	%xmm2, %xmm0
 	ucomiss	%xmm1, %xmm0
 	jbe	.L66
-	.loc 2 133 0 is_stmt 1
-	movl	$.LC61, %edi
+	.loc 2 134 0 is_stmt 1
+	movl	$.LC62, %edi
 	call	puts
-	.loc 2 134 0
+	.loc 2 135 0
 	movq	copyPart(%rip), %rax
 	movl	$9, %esi
 	movq	%rax, %rdi
 	call	realloc
 	movq	%rax, copyPart(%rip)
-	.loc 2 137 0
+	.loc 2 138 0
 	movq	copyPart(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1768,7 +1771,7 @@ main:
 	addq	%rcx, %rax
 	movl	4(%rax), %eax
 	movl	%eax, 4(%rdx)
-	.loc 2 138 0
+	.loc 2 139 0
 	movq	copyPart(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1781,7 +1784,7 @@ main:
 	addq	%rcx, %rax
 	movl	8(%rax), %eax
 	movl	%eax, 8(%rdx)
-	.loc 2 139 0
+	.loc 2 140 0
 	movq	copyPart(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1794,7 +1797,7 @@ main:
 	addq	%rcx, %rax
 	movl	12(%rax), %eax
 	movl	%eax, 12(%rdx)
-	.loc 2 142 0
+	.loc 2 143 0
 	movq	copyPart(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1807,7 +1810,7 @@ main:
 	addq	%rcx, %rax
 	movl	16(%rax), %eax
 	movl	%eax, 16(%rdx)
-	.loc 2 143 0
+	.loc 2 144 0
 	movq	copyPart(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1820,7 +1823,7 @@ main:
 	addq	%rcx, %rax
 	movl	20(%rax), %eax
 	movl	%eax, 20(%rdx)
-	.loc 2 144 0
+	.loc 2 145 0
 	movq	copyPart(%rip), %rax
 	movl	-228(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1833,7 +1836,7 @@ main:
 	addq	%rcx, %rax
 	movl	24(%rax), %eax
 	movl	%eax, 24(%rdx)
-	.loc 2 146 0
+	.loc 2 147 0
 	movq	copyPart(%rip), %rax
 	movl	-220(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1846,7 +1849,7 @@ main:
 	addq	%rcx, %rax
 	movl	(%rax), %eax
 	movl	%eax, (%rdx)
-	.loc 2 147 0
+	.loc 2 148 0
 	movq	copyPart(%rip), %rax
 	movl	-220(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1859,33 +1862,33 @@ main:
 	addq	%rcx, %rax
 	movl	28(%rax), %eax
 	movl	%eax, 28(%rdx)
-	.loc 2 149 0
+	.loc 2 150 0
 	addl	$1, -224(%rbp)
 .L66:
-	.loc 2 119 0
+	.loc 2 120 0
 	addl	$1, -228(%rbp)
 .L64:
-	.loc 2 119 0 is_stmt 0 discriminator 1
+	.loc 2 120 0 is_stmt 0 discriminator 1
 	movl	GV+4(%rip), %eax
 	cmpl	-228(%rbp), %eax
 	jg	.L73
-	.loc 2 158 0 is_stmt 1
+	.loc 2 159 0 is_stmt 1
 	movl	-204(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC53, %edi
+	movl	$.LC54, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 2 159 0
+	.loc 2 160 0
 	movl	-224(%rbp), %edx
 	leaq	-128(%rbp), %rax
 	movl	%edx, %esi
 	movq	%rax, %rdi
 	call	writeGADGETBinaryFile
-	.loc 2 162 0
+	.loc 2 163 0
 	movq	copyPart(%rip), %rax
 	movq	%rax, %rdi
 	call	free
-	.loc 2 165 0
+	.loc 2 166 0
 	movss	GV+12(%rip), %xmm0
 	cvttss2si	%xmm0, %ecx
 	movl	-204(%rbp), %eax
@@ -1894,46 +1897,46 @@ main:
 	movl	%edx, %eax
 	testl	%eax, %eax
 	jne	.L74
-	.loc 2 167 0
+	.loc 2 168 0
 	movl	-204(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC62, %edi
+	movl	$.LC63, %edi
 	movl	$0, %eax
 	call	printf
 .L74:
-	.loc 2 170 0
+	.loc 2 171 0
 	movl	$0, -224(%rbp)
-	.loc 2 94 0
+	.loc 2 95 0
 	addl	$1, -212(%rbp)
 .L61:
-	.loc 2 94 0 is_stmt 0 discriminator 1
+	.loc 2 95 0 is_stmt 0 discriminator 1
 	movsd	-168(%rbp), %xmm0
 	cvttsd2si	%xmm0, %eax
 	cmpl	-212(%rbp), %eax
 	jg	.L75
-	.loc 2 92 0 is_stmt 1
+	.loc 2 93 0 is_stmt 1
 	addl	$1, -216(%rbp)
 .L60:
-	.loc 2 92 0 is_stmt 0 discriminator 1
+	.loc 2 93 0 is_stmt 0 discriminator 1
 	movsd	-168(%rbp), %xmm0
 	cvttsd2si	%xmm0, %eax
 	cmpl	-216(%rbp), %eax
 	jg	.L76
-	.loc 2 90 0 is_stmt 1
+	.loc 2 91 0 is_stmt 1
 	addl	$1, -220(%rbp)
 .L59:
-	.loc 2 90 0 is_stmt 0 discriminator 1
+	.loc 2 91 0 is_stmt 0 discriminator 1
 	movsd	-168(%rbp), %xmm0
 	cvttsd2si	%xmm0, %eax
 	cmpl	-220(%rbp), %eax
 	jg	.L77
-	.loc 2 178 0 is_stmt 1
+	.loc 2 179 0 is_stmt 1
 	movq	part(%rip), %rax
 	movq	%rax, %rdi
 	call	free
-	.loc 2 180 0
-	movl	$0, %eax
 	.loc 2 181 0
+	movl	$0, %eax
+	.loc 2 182 0
 	movq	-24(%rbp), %rbx
 	xorq	%fs:40, %rbx
 	je	.L79
@@ -1947,6 +1950,11 @@ main:
 	.cfi_endproc
 .LFE6:
 	.size	main, .-main
+	.section	.rodata
+	.align 4
+.LC47:
+	.long	1137180672
+	.text
 .Letext0:
 	.file 3 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h"
 	.file 4 "/usr/include/x86_64-linux-gnu/bits/types.h"

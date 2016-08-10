@@ -3648,6 +3648,7 @@ int main(int argc, char *argv[])
   read_parameters(infile);
 
 
+  GV.L = 400.0;
   GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
 
 

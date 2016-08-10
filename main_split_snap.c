@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
   read_parameters(infile);
   
   /*+++++ Transforming the number of files to separation in one axis +++++*/  
+  GV.L = 400.0;
   GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
 
   /*+++++ Reading original GADGET snapshot +++++*/
