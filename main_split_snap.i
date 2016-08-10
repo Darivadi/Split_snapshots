@@ -3666,11 +3666,12 @@ int main(int argc, char *argv[])
 
   printf("-----------------------------------------------\n");
   printf("Cosmological parameters:\n");
-  printf("OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf\n",
+  printf("OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf SnapLength=%lf\n",
   GV.OmegaM0,
   GV.OmegaL0,
   GV.zRS,
-  GV.HubbleParam);
+  GV.HubbleParam,
+  GV.SnapLength);
   printf("-----------------------------------------------\n");
 
   printf("Filename=%s\n", GV.FILENAME);
@@ -3696,6 +3697,13 @@ int main(int argc, char *argv[])
        if(f%((int)GV.NFiles)==0)
   {
     printf("Writing file %d\n", f);
+    printf("i=%d j=%d k=%d f=%d\n", i, j, k, f);
+    printf("i* GV.SnapLength= %lf, (i+1)* GV.SnapLength= %lf\n",
+    i* GV.SnapLength, (i+1)* GV.SnapLength);
+    printf("j* GV.SnapLength= %lf, (j+1)* GV.SnapLength= %lf\n",
+    j* GV.SnapLength, (j+1)* GV.SnapLength);
+    printf("k* GV.SnapLength= %lf, (k+1)* GV.SnapLength= %lf\n",
+    k* GV.SnapLength, (k+1)* GV.SnapLength);
   }
 
 
