@@ -3615,7 +3615,7 @@ int main(int argc, char *argv[])
   char NFilename[100];
   char buffer[50];
   double auxFiles;
-
+  size_t aux_size;
 
   int i, j, k, l, index, indexaux, Np, idPart;
   int ii, jj, kk;
@@ -3711,7 +3711,8 @@ int main(int argc, char *argv[])
   {
     printf("Allocating memory for copyPart\n");
     copyPart = (struct particle *) calloc((size_t) 0, sizeof(struct particle));
-    printf("Memory allocated for copyPart\n");
+    aux_size = sizeof(copyPart);
+    printf("Memory allocated for copyPart: %lu\n", aux_size);
   }
 
        for(m=0; m<GV.NpTot; m++)
@@ -3728,8 +3729,16 @@ int main(int argc, char *argv[])
      if( (part[m].pos[2] >= (k* GV.SnapLength)) && (part[m].pos[2] < ((k+1)* GV.SnapLength)) )
        {
 
+         partsCount++;
          printf("Reallocating memory for copyPart!\n");
-         copyPart = (struct particle *) realloc(copyPart, sizeof(copyPart) + 1);
+
+
+         copyPart = (struct particle *) realloc(copyPart, partsCount * sizeof(copyPart));
+
+         if(copyPart == ((void *)0))
+    {
+      printf("Unable to reallocate memory\n");
+    }
 
 
          copyPart[m].pos[0] = part[m].pos[0];
@@ -3744,7 +3753,7 @@ int main(int argc, char *argv[])
          copyPart[i].id = part[i].id;
          copyPart[i].mass = part[m].mass;
 
-         partsCount++;
+
        }
    }
       }
