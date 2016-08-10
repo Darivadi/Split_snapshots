@@ -88,11 +88,11 @@ int main(int argc, char *argv[])
   printf("Let's begin with the division of files\n");
 
 
-  for(i=0; i<( (int)auxFiles ); i++)
+  for(i=0; i<GV.lengthDivs ; i++)
     {
-      for(j=0; j<( (int)auxFiles ); j++)
+      for(j=0; j<GV.lengthDivs; j++)
 	{
-	  for(k=0; k<( (int)auxFiles ); k++)
+	  for(k=0; k<GV.lengthDivs; k++)
 	    {
 	      f = INDEX(i,j,k);
 	      snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", f);
