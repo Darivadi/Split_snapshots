@@ -90,12 +90,16 @@ int main(int argc, char *argv[])
   printf("Let's begin with the division of files\n");
 
   partsCount = GV.NpTot / GV.NFiles;
+  printf("PartsCount=%d", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {
       snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", i);
-      
+      printf("Writing file %s", buffer);
+
       initID = i*partsCount;
       endID = (i+1)*partsCount - 1;
+
+      printf("iID=%d, eID=%d\n", initID, endID);
       
       writeGADGETBinaryFile(buffer , partsCount, initID, endID);
       

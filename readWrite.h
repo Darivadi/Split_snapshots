@@ -52,8 +52,7 @@ int read_parameters( char filename[] )
     /*Reading filename*/
     fscanf(file, "%d", &GV.NFiles);     
     fscanf(file, "%s", GV.FILENAME); 
-
-    GV.NFiles = 1.0 * GV.lengthDivs * GV.lengthDivs* GV.lengthDivs;
+    printf("Number of files to write: %d", GV.NFiles);
 
     fclose( file );
     

@@ -3347,8 +3347,7 @@ int read_parameters( char filename[] )
 
     fscanf(file, "%d", &GV.NFiles);
     fscanf(file, "%s", GV.FILENAME);
-
-    GV.NFiles = 1.0 * GV.lengthDivs * GV.lengthDivs* GV.lengthDivs;
+    printf("Number of files to write: %d", GV.NFiles);
 
     fclose( file );
 
@@ -3359,7 +3358,7 @@ int read_parameters( char filename[] )
 
     return 0;
 }
-# 76 "readWrite.h"
+# 75 "readWrite.h"
 int readGADGETBinaryFile(){
   FILE *fdata = ((void *)0);
   int i, j;
@@ -3497,7 +3496,7 @@ int readGADGETBinaryFile(){
   fclose(fdata);
   return N_tot;
 }
-# 226 "readWrite.h"
+# 225 "readWrite.h"
 int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 {
   FILE *fdata = ((void *)0);
@@ -3562,7 +3561,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
       fwrite(&faux[0],sizeof(float),3,fdata);
     }
   printf("Velocities writen\n");
-# 371 "readWrite.h"
+# 370 "readWrite.h"
   fclose(fdata);
 
   return 0;
@@ -3649,17 +3648,21 @@ int main(int argc, char *argv[])
   printf("Let's begin with the division of files\n");
 
   partsCount = GV.NpTot / GV.NFiles;
+  printf("PartsCount=%d", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {
       snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", i);
+      printf("Writing file %s", buffer);
 
       initID = i*partsCount;
       endID = (i+1)*partsCount - 1;
 
+      printf("iID=%d, eID=%d\n", initID, endID);
+
       writeGADGETBinaryFile(buffer , partsCount, initID, endID);
 
     }
-# 203 "main_split_snap.c"
+# 207 "main_split_snap.c"
   free(part);
 
   return 0;
