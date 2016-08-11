@@ -244,7 +244,6 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   //N_tot = GV.NpTot;
   printf("N_tot = %d, GV.NpTot = %d\n", N_tot, GV.NpTot);
   printf("iID=%d, eID=%d\n", initID, endID);
-
   
   Header.Npart[1] = N_tot;
   Header.npartTotal[1] = N_tot;
@@ -268,9 +267,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   //for(i=0; i<N_tot; i++) 
   for(i=initID; i<(endID+1); i++)
     {      
-      faux[X] = copyPart[i].pos[X];
-      faux[Y] = copyPart[i].pos[Y];
-      faux[Z] = copyPart[i].pos[Z];
+      faux[X] = part[i].pos[X];
+      faux[Y] = part[i].pos[Y];
+      faux[Z] = part[i].pos[Z];
       fwrite(&faux[0], sizeof(float), 3, fdata);
     }//for i
   nread=fwrite(&dummy, sizeof(dummy), 1, fdata);
@@ -283,9 +282,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   //for(i=0; i<N_tot; i++)
   for(i=initID; i<(endID+1); i++)
     {
-      faux[X] = copyPart[i].vel[X];
-      faux[Y] = copyPart[i].vel[Y];
-      faux[Z] = copyPart[i].vel[Z];
+      faux[X] = part[i].vel[X];
+      faux[Y] = part[i].vel[Y];
+      faux[Z] = part[i].vel[Z];
       fwrite(&faux[0],sizeof(float),3,fdata);
     }//for i
   printf("Velocities writen\n");
@@ -298,7 +297,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   for(i=0; i<N_tot; i++)
     {      
-      uintaux = copyPart[i].id;
+      uintaux = part[i].id;
       nread=fwrite(&uintaux, sizeof(unsigned int), 1, fdata);
     }//for i
   printf("IDs writen\n");
@@ -314,7 +313,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   /*
   for(i=0; i<N_tot; i++)
     {
-      Maux = copyPart[i].mass;
+      Maux = part[i].mass;
       fwrite(&Maux, sizeof(float), 1, fdata);
     }//for i
   */
@@ -328,7 +327,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 	{
 	  for(i=N_min;i<N_max;i++)
 	    {
-	      Maux = copyPart[i].mass;
+	      Maux = part[i].mass;
 	      fwrite(&Maux,sizeof(float),1,fdata);
 	      printf("Maux writen\n");
 	    }//for i
@@ -354,7 +353,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 	{
 	  for(i=N_min;i<N_max;i++){
 	    fwrite(&Maux,sizeof(float),1,fdata);
-	    Maux = copyPart[i].mass;
+	    Maux = part[i].mass;
 	  }//for i
 	}//if
       
@@ -362,7 +361,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 	{
 	  for(i=N_min;i<N_max;i++)
 	    {
-	      copyPart[i].mass = Header.mass[j];
+	      part[i].mass = Header.mass[j];
 	    }//for i
 	}//if
       N_min=N_max;

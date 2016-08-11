@@ -3519,7 +3519,6 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   printf("N_tot = %d, GV.NpTot = %d\n", N_tot, GV.NpTot);
   printf("iID=%d, eID=%d\n", initID, endID);
 
-
   Header.Npart[1] = N_tot;
   Header.npartTotal[1] = N_tot;
 
@@ -3542,9 +3541,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 
   for(i=initID; i<(endID+1); i++)
     {
-      faux[0] = copyPart[i].pos[0];
-      faux[1] = copyPart[i].pos[1];
-      faux[2] = copyPart[i].pos[2];
+      faux[0] = part[i].pos[0];
+      faux[1] = part[i].pos[1];
+      faux[2] = part[i].pos[2];
       fwrite(&faux[0], sizeof(float), 3, fdata);
     }
   nread=fwrite(&dummy, sizeof(dummy), 1, fdata);
@@ -3557,13 +3556,13 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 
   for(i=initID; i<(endID+1); i++)
     {
-      faux[0] = copyPart[i].vel[0];
-      faux[1] = copyPart[i].vel[1];
-      faux[2] = copyPart[i].vel[2];
+      faux[0] = part[i].vel[0];
+      faux[1] = part[i].vel[1];
+      faux[2] = part[i].vel[2];
       fwrite(&faux[0],sizeof(float),3,fdata);
     }
   printf("Velocities writen\n");
-# 373 "readWrite.h"
+# 372 "readWrite.h"
   fclose(fdata);
 
   return 0;
