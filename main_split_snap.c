@@ -14,10 +14,11 @@
 int main(int argc, char *argv[])
 {  
   char *infile=NULL;
-  int f, m, partsCount = 0;
+  int f, m, partsCount;
   char NFilename[100];
   char buffer[50];
   double auxFiles;
+  int initID, endID;
   size_t aux_size;
 
   int i, j, k, l, index, indexaux, Np, idPart;
@@ -50,9 +51,7 @@ int main(int argc, char *argv[])
   printf("Reading parameters\n");
   read_parameters(infile);
   
-  /*+++++ Transforming the number of files to separation in one axis +++++*/  
-  GV.L = 400.0;
-  GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
+
 
   /*+++++ Reading original GADGET snapshot +++++*/
   GV.NpTot = readGADGETBinaryFile();
@@ -66,6 +65,9 @@ int main(int argc, char *argv[])
   /* Simulation parameters */
   GV.L = Header.BoxSize;  
   GV.mass = Header.mass[1];
+
+  /*+++++ Transforming the number of files to separation in one axis +++++*/  
+  //GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
 
   printf("-----------------------------------------------\n");
   printf("Cosmological parameters:\n");
@@ -87,7 +89,20 @@ int main(int argc, char *argv[])
 
   printf("Let's begin with the division of files\n");
 
+  partsCount = GV.NpTot / GV.NFiles;
+  for(i=0; i<GV.NFiles; i++)
+    {
+      snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", i);
+      
+      initID = i*partsCount;
+      endID = (i+1)*partsCount - 1;
+      
+      writeGADGETBinaryFile(buffer , partsCount, initID, endID);
+      
+    }//for i
 
+
+  /*
   for(i=0; i<GV.lengthDivs ; i++)
     {
       for(j=0; j<GV.lengthDivs; j++)
@@ -143,12 +158,12 @@ int main(int argc, char *argv[])
 				  printf("Unable to reallocate memory\n");
 				}//if
 			      
-			      /*..... Copying positions .....*/
+			      //..... Copying positions .....
 			      copyPart[m].pos[X] = part[m].pos[X];
 			      copyPart[m].pos[Y] = part[m].pos[Y];
 			      copyPart[m].pos[Z] = part[m].pos[Z];
 			      
-			      /*..... Copying velocities .....*/
+			      //..... Copying velocities .....
 			      copyPart[m].vel[X] = part[m].vel[X];
 			      copyPart[m].vel[Y] = part[m].vel[Y];
 			      copyPart[m].vel[Z] = part[m].vel[Z];
@@ -181,7 +196,7 @@ int main(int argc, char *argv[])
 	    }//for k
 	}//for j      
     }//for i
-
+  */
 
  
   /* Freeing up memory allocation */

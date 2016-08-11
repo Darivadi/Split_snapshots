@@ -169,7 +169,7 @@ read_parameters:
 	movq	%rax, -2024(%rbp)
 	.loc 1 53 0
 	movq	-2024(%rbp), %rax
-	movl	$GV+20, %edx
+	movl	$GV+12, %edx
 	movl	$.LC8, %esi
 	movq	%rax, %rdi
 	movl	$0, %eax
@@ -891,18 +891,12 @@ readGADGETBinaryFile:
 	.string	"Positions writen"
 .LC40:
 	.string	"Velocities writen"
-.LC41:
-	.string	"IDs writen"
-.LC42:
-	.string	"Writing masses"
-.LC43:
-	.string	"Maux writen"
 	.text
 	.globl	writeGADGETBinaryFile
 	.type	writeGADGETBinaryFile, @function
 writeGADGETBinaryFile:
 .LFB5:
-	.loc 1 226 0
+	.loc 1 227 0
 	.cfi_startproc
 	pushq	%rbp
 	.cfi_def_cfa_offset 16
@@ -910,129 +904,138 @@ writeGADGETBinaryFile:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 	subq	$80, %rsp
-	movq	%rdi, -72(%rbp)
-	movl	%esi, -76(%rbp)
-	.loc 1 227 0
+	movq	%rdi, -56(%rbp)
+	movl	%esi, -60(%rbp)
+	movl	%edx, -64(%rbp)
+	movl	%ecx, -68(%rbp)
+	.loc 1 228 0
 	movq	$0, -24(%rbp)
-	.loc 1 229 0
+	.loc 1 230 0
 	movl	$0, -28(%rbp)
-	.loc 1 233 0
+	.loc 1 234 0
 	movl	$.LC12, %edi
 	call	puts
-	.loc 1 234 0
-	movq	-72(%rbp), %rax
+	.loc 1 235 0
+	movq	-56(%rbp), %rax
 	movq	%rax, %rsi
 	movl	$.LC32, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 1 235 0
-	movq	-72(%rbp), %rax
+	.loc 1 236 0
+	movq	-56(%rbp), %rax
 	movl	$.LC33, %esi
 	movq	%rax, %rdi
 	call	fopen
 	movq	%rax, -24(%rbp)
-	.loc 1 238 0
+	.loc 1 239 0
 	cmpq	$0, -24(%rbp)
 	jne	.L37
-	.loc 1 240 0
-	movq	-72(%rbp), %rax
+	.loc 1 241 0
+	movq	-56(%rbp), %rax
 	movq	%rax, %rsi
 	movl	$.LC14, %edi
 	movl	$0, %eax
 	call	printf
 .L37:
-	.loc 1 242 0
-	movq	-72(%rbp), %rax
+	.loc 1 243 0
+	movq	-56(%rbp), %rax
 	movq	%rax, %rsi
 	movl	$.LC34, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 1 245 0
+	.loc 1 246 0
 	movl	GV+4(%rip), %edx
-	movl	-76(%rbp), %eax
+	movl	-60(%rbp), %eax
 	movl	%eax, %esi
 	movl	$.LC35, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 1 247 0
+	.loc 1 248 0
+	movl	-60(%rbp), %eax
+	movl	%eax, Header+4(%rip)
+	.loc 1 249 0
+	movl	-60(%rbp), %eax
+	movl	%eax, Header+100(%rip)
+	.loc 1 251 0
 	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
+	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 248 0
+	.loc 1 252 0
 	movq	-24(%rbp), %rax
 	movq	%rax, %rcx
 	movl	$1, %edx
 	movl	$256, %esi
 	movl	$Header, %edi
 	call	fwrite
-	.loc 1 249 0
+	.loc 1 253 0
 	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
+	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 251 0
+	.loc 1 255 0
 	movl	$.LC36, %edi
 	call	puts
-	.loc 1 256 0
-	movl	-76(%rbp), %edx
+	.loc 1 260 0
+	movl	-60(%rbp), %edx
 	movl	%edx, %eax
 	addl	%eax, %eax
 	addl	%edx, %eax
 	sall	$2, %eax
-	movl	%eax, -56(%rbp)
-	.loc 1 258 0
-	movl	-56(%rbp), %eax
+	movl	%eax, -36(%rbp)
+	.loc 1 262 0
+	movl	-36(%rbp), %eax
 	movl	%eax, %esi
 	movl	$.LC37, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 1 260 0
+	.loc 1 264 0
 	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
+	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 261 0
+	.loc 1 265 0
 	movl	$.LC38, %edi
 	call	puts
-	.loc 1 262 0
-	movl	$0, -44(%rbp)
+	.loc 1 267 0
+	movl	-64(%rbp), %eax
+	movl	%eax, -32(%rbp)
 	jmp	.L38
 .L39:
-	.loc 1 264 0 discriminator 2
+	.loc 1 269 0 discriminator 2
 	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
+	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
 	salq	$5, %rdx
 	addq	%rdx, %rax
 	movl	4(%rax), %eax
 	movl	%eax, -16(%rbp)
-	.loc 1 265 0 discriminator 2
+	.loc 1 270 0 discriminator 2
 	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
+	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
 	salq	$5, %rdx
 	addq	%rdx, %rax
 	movl	8(%rax), %eax
 	movl	%eax, -12(%rbp)
-	.loc 1 266 0 discriminator 2
+	.loc 1 271 0 discriminator 2
 	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
+	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
 	salq	$5, %rdx
 	addq	%rdx, %rax
 	movl	12(%rax), %eax
 	movl	%eax, -8(%rbp)
-	.loc 1 267 0 discriminator 2
+	.loc 1 272 0 discriminator 2
 	movq	-24(%rbp), %rdx
 	leaq	-16(%rbp), %rax
 	movq	%rdx, %rcx
@@ -1040,62 +1043,64 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 262 0 discriminator 2
-	addl	$1, -44(%rbp)
+	.loc 1 267 0 discriminator 2
+	addl	$1, -32(%rbp)
 .L38:
-	.loc 1 262 0 is_stmt 0 discriminator 1
-	movl	-44(%rbp), %eax
-	cmpl	-76(%rbp), %eax
-	jl	.L39
-	.loc 1 269 0 is_stmt 1
+	.loc 1 267 0 is_stmt 0 discriminator 1
+	movl	-68(%rbp), %eax
+	addl	$1, %eax
+	cmpl	-32(%rbp), %eax
+	jg	.L39
+	.loc 1 274 0 is_stmt 1
 	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
+	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
 	movl	%eax, -28(%rbp)
-	.loc 1 271 0
+	.loc 1 276 0
 	movl	$.LC39, %edi
 	call	puts
-	.loc 1 275 0
+	.loc 1 280 0
 	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
+	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
 	movl	$1, %edx
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 276 0
-	movl	$0, -44(%rbp)
+	.loc 1 282 0
+	movl	-64(%rbp), %eax
+	movl	%eax, -32(%rbp)
 	jmp	.L40
 .L41:
-	.loc 1 278 0 discriminator 2
+	.loc 1 284 0 discriminator 2
 	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
+	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
 	salq	$5, %rdx
 	addq	%rdx, %rax
 	movl	16(%rax), %eax
 	movl	%eax, -16(%rbp)
-	.loc 1 279 0 discriminator 2
+	.loc 1 285 0 discriminator 2
 	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
+	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
 	salq	$5, %rdx
 	addq	%rdx, %rax
 	movl	20(%rax), %eax
 	movl	%eax, -12(%rbp)
-	.loc 1 280 0 discriminator 2
+	.loc 1 286 0 discriminator 2
 	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
+	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
 	salq	$5, %rdx
 	addq	%rdx, %rax
 	movl	24(%rax), %eax
 	movl	%eax, -8(%rbp)
-	.loc 1 281 0 discriminator 2
+	.loc 1 287 0 discriminator 2
 	movq	-24(%rbp), %rdx
 	leaq	-16(%rbp), %rax
 	movq	%rdx, %rcx
@@ -1103,205 +1108,24 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 276 0 discriminator 2
-	addl	$1, -44(%rbp)
+	.loc 1 282 0 discriminator 2
+	addl	$1, -32(%rbp)
 .L40:
-	.loc 1 276 0 is_stmt 0 discriminator 1
-	movl	-44(%rbp), %eax
-	cmpl	-76(%rbp), %eax
-	jl	.L41
-	.loc 1 283 0 is_stmt 1
+	.loc 1 282 0 is_stmt 0 discriminator 1
+	movl	-68(%rbp), %eax
+	addl	$1, %eax
+	cmpl	-32(%rbp), %eax
+	jg	.L41
+	.loc 1 289 0 is_stmt 1
 	movl	$.LC40, %edi
 	call	puts
-	.loc 1 288 0
-	movl	-76(%rbp), %eax
-	sall	$2, %eax
-	movl	%eax, -56(%rbp)
-	.loc 1 289 0
-	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
-	movq	%rdx, %rcx
-	movl	$1, %edx
-	movl	$4, %esi
-	movq	%rax, %rdi
-	call	fwrite
-	.loc 1 290 0
-	movl	$0, -44(%rbp)
-	jmp	.L42
-.L43:
-	.loc 1 292 0 discriminator 2
-	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movl	(%rax), %eax
-	movl	%eax, -48(%rbp)
-	.loc 1 293 0 discriminator 2
-	movq	-24(%rbp), %rdx
-	leaq	-48(%rbp), %rax
-	movq	%rdx, %rcx
-	movl	$1, %edx
-	movl	$4, %esi
-	movq	%rax, %rdi
-	call	fwrite
-	movl	%eax, -28(%rbp)
-	.loc 1 290 0 discriminator 2
-	addl	$1, -44(%rbp)
-.L42:
-	.loc 1 290 0 is_stmt 0 discriminator 1
-	movl	-44(%rbp), %eax
-	cmpl	-76(%rbp), %eax
-	jl	.L43
-	.loc 1 295 0 is_stmt 1
-	movl	$.LC41, %edi
-	call	puts
-	.loc 1 300 0
-	movl	$.LC42, %edi
-	call	puts
-	.loc 1 301 0
-	movl	-76(%rbp), %edx
-	movl	%edx, %eax
-	addl	%eax, %eax
-	addl	%edx, %eax
-	sall	$2, %eax
-	movl	%eax, -56(%rbp)
-	.loc 1 302 0
-	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
-	movq	%rdx, %rcx
-	movl	$1, %edx
-	movl	$4, %esi
-	movq	%rax, %rdi
-	call	fwrite
-	.loc 1 313 0
-	movl	$0, -32(%rbp)
-	movl	-32(%rbp), %eax
-	movl	%eax, -36(%rbp)
-	.loc 1 314 0
-	movl	$0, -40(%rbp)
-	jmp	.L44
-.L53:
-	.loc 1 316 0
-	movl	-40(%rbp), %eax
-	cltq
-	addq	$24, %rax
-	movl	Header(,%rax,4), %eax
-	addl	%eax, -32(%rbp)
-	.loc 1 317 0
-	movl	-40(%rbp), %eax
-	cltq
-	addq	$2, %rax
-	movsd	Header+8(,%rax,8), %xmm0
-	xorpd	%xmm1, %xmm1
-	ucomisd	%xmm1, %xmm0
-	jp	.L45
-	xorpd	%xmm1, %xmm1
-	ucomisd	%xmm1, %xmm0
-	jne	.L45
-	.loc 1 317 0 is_stmt 0 discriminator 1
-	movl	-40(%rbp), %eax
-	cltq
-	addq	$24, %rax
-	movl	Header(,%rax,4), %eax
-	testl	%eax, %eax
-	je	.L45
-	.loc 1 319 0 is_stmt 1
-	movl	-36(%rbp), %eax
-	movl	%eax, -44(%rbp)
-	jmp	.L47
-.L48:
-	.loc 1 321 0 discriminator 2
-	movq	copyPart(%rip), %rax
-	movl	-44(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movl	28(%rax), %eax
-	movl	%eax, -52(%rbp)
-	.loc 1 322 0 discriminator 2
-	movq	-24(%rbp), %rdx
-	leaq	-52(%rbp), %rax
-	movq	%rdx, %rcx
-	movl	$1, %edx
-	movl	$4, %esi
-	movq	%rax, %rdi
-	call	fwrite
-	.loc 1 323 0 discriminator 2
-	movl	$.LC43, %edi
-	call	puts
-	.loc 1 319 0 discriminator 2
-	addl	$1, -44(%rbp)
-.L47:
-	.loc 1 319 0 is_stmt 0 discriminator 1
-	movl	-44(%rbp), %eax
-	cmpl	-32(%rbp), %eax
-	jl	.L48
-.L45:
-	.loc 1 327 0 is_stmt 1
-	movl	-40(%rbp), %eax
-	cltq
-	addq	$2, %rax
-	movsd	Header+8(,%rax,8), %xmm0
-	xorpd	%xmm1, %xmm1
-	ucomisd	%xmm1, %xmm0
-	jp	.L56
-	xorpd	%xmm1, %xmm1
-	ucomisd	%xmm1, %xmm0
-	je	.L49
-.L56:
-	.loc 1 327 0 is_stmt 0 discriminator 1
-	movl	-40(%rbp), %eax
-	cltq
-	addq	$24, %rax
-	movl	Header(,%rax,4), %eax
-	testl	%eax, %eax
-	je	.L49
-	.loc 1 329 0 is_stmt 1
-	movl	-36(%rbp), %eax
-	movl	%eax, -44(%rbp)
-	jmp	.L51
-.L52:
-	.loc 1 331 0 discriminator 2
-	movl	-40(%rbp), %eax
-	cltq
-	addq	$2, %rax
-	movsd	Header+8(,%rax,8), %xmm0
-	unpcklpd	%xmm0, %xmm0
-	cvtpd2ps	%xmm0, %xmm0
-	movss	%xmm0, -52(%rbp)
-	.loc 1 329 0 discriminator 2
-	addl	$1, -44(%rbp)
-.L51:
-	.loc 1 329 0 is_stmt 0 discriminator 1
-	movl	-44(%rbp), %eax
-	cmpl	-32(%rbp), %eax
-	jl	.L52
-.L49:
-	.loc 1 334 0 is_stmt 1
-	movl	-32(%rbp), %eax
-	movl	%eax, -36(%rbp)
-	.loc 1 314 0
-	addl	$1, -40(%rbp)
-.L44:
-	.loc 1 314 0 is_stmt 0 discriminator 1
-	cmpl	$5, -40(%rbp)
-	jle	.L53
-	.loc 1 361 0 is_stmt 1
-	movq	-24(%rbp), %rdx
-	leaq	-56(%rbp), %rax
-	movq	%rdx, %rcx
-	movl	$1, %edx
-	movl	$4, %esi
-	movq	%rax, %rdi
-	call	fwrite
-	.loc 1 362 0
+	.loc 1 371 0
 	movq	-24(%rbp), %rax
 	movq	%rax, %rdi
 	call	fclose
-	.loc 1 364 0
+	.loc 1 373 0
 	movl	$0, %eax
-	.loc 1 366 0
+	.loc 1 375 0
 	leave
 	.cfi_def_cfa 7, 8
 	ret
@@ -1310,55 +1134,27 @@ writeGADGETBinaryFile:
 	.size	writeGADGETBinaryFile, .-writeGADGETBinaryFile
 	.section	.rodata
 	.align 8
-.LC44:
+.LC41:
 	.string	"Error: Incomplete number of parameters. Execute as follows:"
-.LC45:
+.LC42:
 	.string	"%s Parameters_file\n"
-.LC46:
+.LC43:
 	.string	"Reading parameters"
 	.align 8
-.LC48:
+.LC44:
 	.string	"-----------------------------------------------"
-.LC49:
+.LC45:
 	.string	"Cosmological parameters:"
 	.align 8
-.LC50:
+.LC46:
 	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf SnapLength=%lf\n"
-.LC51:
+.LC47:
 	.string	"Filename=%s\n"
 	.align 8
-.LC52:
+.LC48:
 	.string	"Let's begin with the division of files"
-.LC53:
+.LC49:
 	.string	"./Box_400_512_150.%d"
-.LC54:
-	.string	"Writing file %d\n"
-.LC55:
-	.string	"i=%d j=%d k=%d f=%d\n"
-	.align 8
-.LC56:
-	.string	"i* GV.SnapLength= %lf, (i+1)* GV.SnapLength= %lf\n"
-	.align 8
-.LC57:
-	.string	"j* GV.SnapLength= %lf, (j+1)* GV.SnapLength= %lf\n"
-	.align 8
-.LC58:
-	.string	"k* GV.SnapLength= %lf, (k+1)* GV.SnapLength= %lf\n"
-	.align 8
-.LC59:
-	.string	"Allocating memory for copyPart"
-	.align 8
-.LC60:
-	.string	"Memory allocated for copyPart: %lu\n"
-.LC61:
-	.string	"Particle %d\n"
-	.align 8
-.LC62:
-	.string	"Reallocating memory for copyPart!"
-.LC63:
-	.string	"Unable to reallocate memory"
-.LC64:
-	.string	"File %d was writen\n"
 	.text
 	.globl	main
 	.type	main, @function
@@ -1373,592 +1169,193 @@ main:
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
 	pushq	%rbx
-	subq	$248, %rsp
+	subq	$232, %rsp
 	.cfi_offset 3, -24
-	movl	%edi, -244(%rbp)
-	movq	%rsi, -256(%rbp)
+	movl	%edi, -228(%rbp)
+	movq	%rsi, -240(%rbp)
 	.loc 2 15 0
 	movq	%fs:40, %rax
 	movq	%rax, -24(%rbp)
 	xorl	%eax, %eax
 	.loc 2 16 0
-	movq	$0, -200(%rbp)
-	.loc 2 17 0
-	movl	$0, -224(%rbp)
-	.loc 2 30 0
 	movq	$0, -192(%rbp)
-	.loc 2 32 0
-	movl	$0, %eax
-	movq	%rax, -184(%rbp)
+	.loc 2 31 0
+	movq	$0, -184(%rbp)
+	.loc 2 33 0
 	movl	$0, %eax
 	movq	%rax, -176(%rbp)
-	.loc 2 33 0
+	movl	$0, %eax
+	movq	%rax, -168(%rbp)
+	.loc 2 34 0
 	movl	$0, -208(%rbp)
-	.loc 2 42 0
-	cmpl	$1, -244(%rbp)
-	jg	.L58
-	.loc 2 44 0
-	movl	$.LC44, %edi
-	call	puts
+	.loc 2 43 0
+	cmpl	$1, -228(%rbp)
+	jg	.L44
 	.loc 2 45 0
-	movq	-256(%rbp), %rax
+	movl	$.LC41, %edi
+	call	puts
+	.loc 2 46 0
+	movq	-240(%rbp), %rax
 	movq	(%rax), %rax
 	movq	%rax, %rsi
-	movl	$.LC45, %edi
+	movl	$.LC42, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 2 46 0
+	.loc 2 47 0
 	movl	$0, %edi
 	call	exit
-.L58:
-	.loc 2 49 0
-	movq	-256(%rbp), %rax
-	movq	8(%rax), %rax
-	movq	%rax, -200(%rbp)
+.L44:
 	.loc 2 50 0
-	movl	$.LC46, %edi
-	call	puts
+	movq	-240(%rbp), %rax
+	movq	8(%rax), %rax
+	movq	%rax, -192(%rbp)
 	.loc 2 51 0
-	movq	-200(%rbp), %rax
+	movl	$.LC43, %edi
+	call	puts
+	.loc 2 52 0
+	movq	-192(%rbp), %rax
 	movq	%rax, %rdi
 	call	read_parameters
-	.loc 2 54 0
-	movl	.LC47(%rip), %eax
-	movl	%eax, GV(%rip)
-	.loc 2 55 0
-	movss	GV(%rip), %xmm0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm0
-	movl	GV+20(%rip), %eax
-	cvtsi2sd	%eax, %xmm1
-	divsd	%xmm1, %xmm0
-	unpcklpd	%xmm0, %xmm0
-	cvtpd2ps	%xmm0, %xmm0
-	movss	%xmm0, GV+16(%rip)
-	.loc 2 58 0
+	.loc 2 57 0
 	movl	$0, %eax
 	call	readGADGETBinaryFile
 	movl	%eax, GV+4(%rip)
-	.loc 2 61 0
+	.loc 2 60 0
 	movsd	Header+136(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1024(%rip)
-	.loc 2 62 0
+	.loc 2 61 0
 	movsd	Header+144(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1028(%rip)
-	.loc 2 63 0
+	.loc 2 62 0
 	movsd	Header+80(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1032(%rip)
-	.loc 2 64 0
+	.loc 2 63 0
 	movsd	Header+152(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+1040(%rip)
-	.loc 2 67 0
+	.loc 2 66 0
 	movsd	Header+128(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV(%rip)
-	.loc 2 68 0
+	.loc 2 67 0
 	movsd	Header+32(%rip), %xmm0
 	unpcklpd	%xmm0, %xmm0
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+8(%rip)
-	.loc 2 70 0
-	movl	$.LC48, %edi
-	call	puts
-	.loc 2 71 0
-	movl	$.LC49, %edi
-	call	puts
-	.loc 2 77 0
-	movss	GV+16(%rip), %xmm0
 	.loc 2 72 0
+	movl	$.LC44, %edi
+	call	puts
+	.loc 2 73 0
+	movl	$.LC45, %edi
+	call	puts
+	.loc 2 79 0
+	movss	GV+16(%rip), %xmm0
+	.loc 2 74 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm4
-	.loc 2 76 0
+	.loc 2 78 0
 	movss	GV+1040(%rip), %xmm0
-	.loc 2 72 0
+	.loc 2 74 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm3
-	.loc 2 75 0
+	.loc 2 77 0
 	movss	GV+1032(%rip), %xmm0
-	.loc 2 72 0
+	.loc 2 74 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm2
-	.loc 2 74 0
+	.loc 2 76 0
 	movss	GV+1028(%rip), %xmm0
-	.loc 2 72 0
+	.loc 2 74 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm1
-	.loc 2 73 0
+	.loc 2 75 0
 	movss	GV+1024(%rip), %xmm0
-	.loc 2 72 0
+	.loc 2 74 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC50, %edi
+	movl	$.LC46, %edi
 	movl	$5, %eax
 	call	printf
-	.loc 2 78 0
-	movl	$.LC48, %edi
-	call	puts
 	.loc 2 80 0
+	movl	$.LC44, %edi
+	call	puts
+	.loc 2 82 0
 	movl	$GV+24, %esi
-	movl	$.LC51, %edi
+	movl	$.LC47, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 2 81 0
+	.loc 2 83 0
+	movl	$.LC44, %edi
+	call	puts
+	.loc 2 90 0
 	movl	$.LC48, %edi
 	call	puts
-	.loc 2 88 0
-	movl	$.LC52, %edi
-	call	puts
-	.loc 2 91 0
-	movl	$0, -220(%rbp)
-	jmp	.L59
-.L78:
-	.loc 2 93 0
-	movl	$0, -216(%rbp)
-	jmp	.L60
-.L77:
-	.loc 2 95 0
-	movl	$0, -212(%rbp)
-	jmp	.L61
-.L76:
-	.loc 2 97 0
-	movl	GV+20(%rip), %edx
-	movl	GV+20(%rip), %eax
-	imull	-220(%rbp), %eax
-	movl	%eax, %ecx
-	movl	-216(%rbp), %eax
-	addl	%ecx, %eax
-	imull	%eax, %edx
-	movl	-212(%rbp), %eax
-	addl	%edx, %eax
+	.loc 2 92 0
+	movl	GV+4(%rip), %eax
+	cvtsi2ss	%eax, %xmm0
+	movss	GV+12(%rip), %xmm1
+	divss	%xmm1, %xmm0
+	cvttss2si	%xmm0, %eax
 	movl	%eax, -204(%rbp)
-	.loc 2 98 0
-	movl	-204(%rbp), %edx
+	.loc 2 93 0
+	movl	$0, -212(%rbp)
+	jmp	.L45
+.L46:
+	.loc 2 95 0 discriminator 2
+	movl	-212(%rbp), %edx
 	leaq	-128(%rbp), %rax
 	movl	%edx, %ecx
-	movl	$.LC53, %edx
+	movl	$.LC49, %edx
 	movl	$50, %esi
 	movq	%rax, %rdi
 	movl	$0, %eax
 	call	snprintf
-	.loc 2 100 0
-	movss	GV+12(%rip), %xmm0
-	cvttss2si	%xmm0, %ecx
-	movl	-204(%rbp), %eax
-	cltd
-	idivl	%ecx
-	movl	%edx, %eax
-	testl	%eax, %eax
-	jne	.L62
-	.loc 2 102 0
-	movl	-204(%rbp), %eax
-	movl	%eax, %esi
-	movl	$.LC54, %edi
-	movl	$0, %eax
-	call	printf
-	.loc 2 103 0
+	.loc 2 97 0 discriminator 2
+	movl	-212(%rbp), %eax
+	imull	-204(%rbp), %eax
+	movl	%eax, -200(%rbp)
+	.loc 2 98 0 discriminator 2
+	movl	-212(%rbp), %eax
+	addl	$1, %eax
+	imull	-204(%rbp), %eax
+	subl	$1, %eax
+	movl	%eax, -196(%rbp)
+	.loc 2 100 0 discriminator 2
+	movl	-196(%rbp), %ecx
+	movl	-200(%rbp), %edx
 	movl	-204(%rbp), %esi
-	movl	-212(%rbp), %ecx
-	movl	-216(%rbp), %edx
-	movl	-220(%rbp), %eax
-	movl	%esi, %r8d
-	movl	%eax, %esi
-	movl	$.LC55, %edi
-	movl	$0, %eax
-	call	printf
-	.loc 2 105 0
-	movl	-220(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm1
-	mulss	%xmm1, %xmm0
-	.loc 2 104 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm1
-	.loc 2 105 0
-	cvtsi2ss	-220(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	.loc 2 104 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC56, %edi
-	movl	$2, %eax
-	call	printf
-	.loc 2 107 0
-	movl	-216(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm1
-	mulss	%xmm1, %xmm0
-	.loc 2 106 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm1
-	.loc 2 107 0
-	cvtsi2ss	-216(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	.loc 2 106 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC57, %edi
-	movl	$2, %eax
-	call	printf
-	.loc 2 109 0
-	movl	-212(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm1
-	mulss	%xmm1, %xmm0
-	.loc 2 108 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm1
-	.loc 2 109 0
-	cvtsi2ss	-212(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	.loc 2 108 0
-	unpcklps	%xmm0, %xmm0
-	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC58, %edi
-	movl	$2, %eax
-	call	printf
-.L62:
-	.loc 2 113 0
-	movq	copyPart(%rip), %rax
-	testq	%rax, %rax
-	jne	.L63
-	.loc 2 115 0
-	movl	$.LC59, %edi
-	call	puts
-	.loc 2 116 0
-	movl	$32, %esi
-	movl	$0, %edi
-	call	calloc
-	movq	%rax, copyPart(%rip)
-	.loc 2 117 0
-	movq	$8, -168(%rbp)
-	.loc 2 118 0
-	movq	-168(%rbp), %rax
-	movq	%rax, %rsi
-	movl	$.LC60, %edi
-	movl	$0, %eax
-	call	printf
-.L63:
-	.loc 2 121 0
-	movl	$0, -228(%rbp)
-	jmp	.L64
-.L74:
-	.loc 2 123 0
-	movl	-228(%rbp), %ecx
-	movl	$1441151881, %edx
-	movl	%ecx, %eax
-	imull	%edx
-	sarl	$24, %edx
-	movl	%ecx, %eax
-	sarl	$31, %eax
-	subl	%eax, %edx
-	movl	%edx, %eax
-	imull	$50000000, %eax, %eax
-	subl	%eax, %ecx
-	movl	%ecx, %eax
-	testl	%eax, %eax
-	jne	.L65
-	.loc 2 125 0
-	movl	-228(%rbp), %eax
-	movl	%eax, %esi
-	movl	$.LC61, %edi
-	movl	$0, %eax
-	call	printf
-.L65:
-	.loc 2 128 0
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movss	4(%rax), %xmm1
-	cvtsi2ss	-220(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	ucomiss	%xmm0, %xmm1
-	jb	.L66
-	.loc 2 128 0 is_stmt 0 discriminator 1
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movss	4(%rax), %xmm1
-	movl	-220(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	ucomiss	%xmm1, %xmm0
-	jbe	.L66
-	.loc 2 130 0 is_stmt 1
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movss	8(%rax), %xmm1
-	cvtsi2ss	-216(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	ucomiss	%xmm0, %xmm1
-	jb	.L66
-	.loc 2 130 0 is_stmt 0 discriminator 1
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movss	8(%rax), %xmm1
-	movl	-216(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	ucomiss	%xmm1, %xmm0
-	jbe	.L66
-	.loc 2 132 0 is_stmt 1
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movss	12(%rax), %xmm1
-	cvtsi2ss	-212(%rbp), %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	ucomiss	%xmm0, %xmm1
-	jb	.L66
-	.loc 2 132 0 is_stmt 0 discriminator 1
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rdx, %rax
-	movss	12(%rax), %xmm1
-	movl	-212(%rbp), %eax
-	addl	$1, %eax
-	cvtsi2ss	%eax, %xmm0
-	movss	GV+16(%rip), %xmm2
-	mulss	%xmm2, %xmm0
-	ucomiss	%xmm1, %xmm0
-	jbe	.L66
-	.loc 2 135 0 is_stmt 1
-	addl	$1, -224(%rbp)
-	.loc 2 136 0
-	movl	$.LC62, %edi
-	call	puts
-	.loc 2 139 0
-	movl	-224(%rbp), %eax
-	cltq
-	leaq	0(,%rax,8), %rdx
-	movq	copyPart(%rip), %rax
-	movq	%rdx, %rsi
-	movq	%rax, %rdi
-	call	realloc
-	movq	%rax, copyPart(%rip)
-	.loc 2 141 0
-	movq	copyPart(%rip), %rax
-	testq	%rax, %rax
-	jne	.L73
-	.loc 2 143 0
-	movl	$.LC63, %edi
-	call	puts
-.L73:
-	.loc 2 147 0
-	movq	copyPart(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	4(%rax), %eax
-	movl	%eax, 4(%rdx)
-	.loc 2 148 0
-	movq	copyPart(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	8(%rax), %eax
-	movl	%eax, 8(%rdx)
-	.loc 2 149 0
-	movq	copyPart(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	12(%rax), %eax
-	movl	%eax, 12(%rdx)
-	.loc 2 152 0
-	movq	copyPart(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	16(%rax), %eax
-	movl	%eax, 16(%rdx)
-	.loc 2 153 0
-	movq	copyPart(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	20(%rax), %eax
-	movl	%eax, 20(%rdx)
-	.loc 2 154 0
-	movq	copyPart(%rip), %rax
-	movl	-228(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	24(%rax), %eax
-	movl	%eax, 24(%rdx)
-	.loc 2 156 0
-	movq	copyPart(%rip), %rax
-	movl	-220(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-220(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	(%rax), %eax
-	movl	%eax, (%rdx)
-	.loc 2 157 0
-	movq	copyPart(%rip), %rax
-	movl	-220(%rbp), %edx
-	movslq	%edx, %rdx
-	salq	$5, %rdx
-	addq	%rax, %rdx
-	movq	part(%rip), %rax
-	movl	-228(%rbp), %ecx
-	movslq	%ecx, %rcx
-	salq	$5, %rcx
-	addq	%rcx, %rax
-	movl	28(%rax), %eax
-	movl	%eax, 28(%rdx)
-.L66:
-	.loc 2 121 0
-	addl	$1, -228(%rbp)
-.L64:
-	.loc 2 121 0 is_stmt 0 discriminator 1
-	movl	GV+4(%rip), %eax
-	cmpl	-228(%rbp), %eax
-	jg	.L74
-	.loc 2 168 0 is_stmt 1
-	movl	-204(%rbp), %eax
-	movl	%eax, %esi
-	movl	$.LC54, %edi
-	movl	$0, %eax
-	call	printf
-	.loc 2 169 0
-	movl	-224(%rbp), %edx
 	leaq	-128(%rbp), %rax
-	movl	%edx, %esi
 	movq	%rax, %rdi
 	call	writeGADGETBinaryFile
-	.loc 2 172 0
-	movq	copyPart(%rip), %rax
-	movq	%rax, %rdi
-	call	free
-	.loc 2 175 0
-	movss	GV+12(%rip), %xmm0
-	cvttss2si	%xmm0, %ecx
-	movl	-204(%rbp), %eax
-	cltd
-	idivl	%ecx
-	movl	%edx, %eax
-	testl	%eax, %eax
-	jne	.L75
-	.loc 2 177 0
-	movl	-204(%rbp), %eax
-	movl	%eax, %esi
-	movl	$.LC64, %edi
-	movl	$0, %eax
-	call	printf
-.L75:
-	.loc 2 180 0
-	movl	$0, -224(%rbp)
-	.loc 2 95 0
+	.loc 2 93 0 discriminator 2
 	addl	$1, -212(%rbp)
-.L61:
-	.loc 2 95 0 is_stmt 0 discriminator 1
-	movl	GV+20(%rip), %eax
-	cmpl	-212(%rbp), %eax
-	jg	.L76
-	.loc 2 93 0 is_stmt 1
-	addl	$1, -216(%rbp)
-.L60:
+.L45:
 	.loc 2 93 0 is_stmt 0 discriminator 1
-	movl	GV+20(%rip), %eax
-	cmpl	-216(%rbp), %eax
-	jg	.L77
-	.loc 2 91 0 is_stmt 1
-	addl	$1, -220(%rbp)
-.L59:
-	.loc 2 91 0 is_stmt 0 discriminator 1
-	movl	GV+20(%rip), %eax
-	cmpl	-220(%rbp), %eax
-	jg	.L78
-	.loc 2 188 0 is_stmt 1
+	cvtsi2ss	-212(%rbp), %xmm0
+	movss	GV+12(%rip), %xmm1
+	ucomiss	%xmm0, %xmm1
+	ja	.L46
+	.loc 2 203 0 is_stmt 1
 	movq	part(%rip), %rax
 	movq	%rax, %rdi
 	call	free
-	.loc 2 190 0
+	.loc 2 205 0
 	movl	$0, %eax
-	.loc 2 191 0
+	.loc 2 206 0
 	movq	-24(%rbp), %rbx
 	xorq	%fs:40, %rbx
-	je	.L80
+	je	.L48
 	call	__stack_chk_fail
-.L80:
-	addq	$248, %rsp
+.L48:
+	addq	$232, %rsp
 	popq	%rbx
 	popq	%rbp
 	.cfi_def_cfa 7, 8
@@ -1966,11 +1363,6 @@ main:
 	.cfi_endproc
 .LFE6:
 	.size	main, .-main
-	.section	.rodata
-	.align 4
-.LC47:
-	.long	1137180672
-	.text
 .Letext0:
 	.file 3 "/usr/lib/gcc/x86_64-linux-gnu/4.8/include/stddef.h"
 	.file 4 "/usr/include/x86_64-linux-gnu/bits/types.h"
@@ -1979,15 +1371,15 @@ main:
 	.file 7 "structures.h"
 	.section	.debug_info,"",@progbits
 .Ldebug_info0:
-	.long	0x998
+	.long	0x9af
 	.value	0x4
 	.long	.Ldebug_abbrev0
 	.byte	0x8
 	.uleb128 0x1
-	.long	.LASF119
-	.byte	0x1
-	.long	.LASF120
 	.long	.LASF121
+	.byte	0x1
+	.long	.LASF122
+	.long	.LASF123
 	.quad	.Ltext0
 	.quad	.Letext0-.Ltext0
 	.long	.Ldebug_line0
@@ -2238,7 +1630,7 @@ main:
 	.byte	0xc4
 	.byte	0
 	.uleb128 0xa
-	.long	.LASF122
+	.long	.LASF124
 	.byte	0x6
 	.byte	0x9a
 	.uleb128 0x7
@@ -2620,7 +2012,7 @@ main:
 	.byte	0x8
 	.long	0x9c
 	.uleb128 0x17
-	.long	.LASF123
+	.long	.LASF125
 	.byte	0x1
 	.byte	0x4c
 	.long	0x62
@@ -2727,7 +2119,7 @@ main:
 	.quad	.LFE5-.LFB5
 	.uleb128 0x1
 	.byte	0x9c
-	.long	0x6c5
+	.long	0x6d2
 	.uleb128 0x13
 	.long	.LASF90
 	.byte	0x1
@@ -2735,7 +2127,7 @@ main:
 	.long	0x8f
 	.uleb128 0x3
 	.byte	0x91
-	.sleb128 -88
+	.sleb128 -72
 	.uleb128 0x13
 	.long	.LASF81
 	.byte	0x1
@@ -2743,11 +2135,27 @@ main:
 	.long	0x62
 	.uleb128 0x3
 	.byte	0x91
-	.sleb128 -92
+	.sleb128 -76
+	.uleb128 0x13
+	.long	.LASF91
+	.byte	0x1
+	.byte	0xe2
+	.long	0x62
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -80
+	.uleb128 0x13
+	.long	.LASF92
+	.byte	0x1
+	.byte	0xe2
+	.long	0x62
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -84
 	.uleb128 0x16
 	.long	.LASF80
 	.byte	0x1
-	.byte	0xe3
+	.byte	0xe4
 	.long	0x53a
 	.uleb128 0x2
 	.byte	0x91
@@ -2755,78 +2163,63 @@ main:
 	.uleb128 0x15
 	.string	"i"
 	.byte	0x1
-	.byte	0xe4
-	.long	0x62
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -60
-	.uleb128 0x15
-	.string	"j"
-	.byte	0x1
-	.byte	0xe4
-	.long	0x62
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -56
-	.uleb128 0x16
-	.long	.LASF82
-	.byte	0x1
-	.byte	0xe5
-	.long	0x62
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -52
-	.uleb128 0x16
-	.long	.LASF83
-	.byte	0x1
 	.byte	0xe5
 	.long	0x62
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -48
-	.uleb128 0x16
-	.long	.LASF84
+	.uleb128 0x18
+	.string	"j"
 	.byte	0x1
 	.byte	0xe5
 	.long	0x62
-	.uleb128 0x3
+	.uleb128 0x14
+	.long	.LASF82
+	.byte	0x1
+	.byte	0xe6
+	.long	0x62
+	.uleb128 0x14
+	.long	.LASF83
+	.byte	0x1
+	.byte	0xe6
+	.long	0x62
+	.uleb128 0x16
+	.long	.LASF84
+	.byte	0x1
+	.byte	0xe6
+	.long	0x62
+	.uleb128 0x2
 	.byte	0x91
-	.sleb128 -72
+	.sleb128 -52
 	.uleb128 0x16
 	.long	.LASF85
 	.byte	0x1
-	.byte	0xe5
+	.byte	0xe6
 	.long	0x62
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -44
-	.uleb128 0x16
+	.uleb128 0x14
 	.long	.LASF86
 	.byte	0x1
-	.byte	0xe6
+	.byte	0xe7
 	.long	0x29f
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -68
 	.uleb128 0x16
 	.long	.LASF87
 	.byte	0x1
-	.byte	0xe6
+	.byte	0xe7
 	.long	0x39b
 	.uleb128 0x2
 	.byte	0x91
 	.sleb128 -32
-	.uleb128 0x16
+	.uleb128 0x14
 	.long	.LASF88
 	.byte	0x1
-	.byte	0xe7
+	.byte	0xe8
 	.long	0x4d
-	.uleb128 0x2
-	.byte	0x91
-	.sleb128 -64
 	.byte	0
 	.uleb128 0x12
-	.long	.LASF91
+	.long	.LASF93
 	.byte	0x2
 	.byte	0xe
 	.long	0x62
@@ -2834,282 +2227,267 @@ main:
 	.quad	.LFE6-.LFB6
 	.uleb128 0x1
 	.byte	0x9c
-	.long	0x90c
+	.long	0x923
 	.uleb128 0x13
-	.long	.LASF92
+	.long	.LASF94
 	.byte	0x2
 	.byte	0xe
 	.long	0x62
 	.uleb128 0x3
 	.byte	0x91
-	.sleb128 -260
+	.sleb128 -244
 	.uleb128 0x13
-	.long	.LASF93
+	.long	.LASF95
 	.byte	0x2
 	.byte	0xe
-	.long	0x90c
+	.long	0x923
 	.uleb128 0x3
 	.byte	0x91
-	.sleb128 -272
+	.sleb128 -256
 	.uleb128 0x16
-	.long	.LASF94
+	.long	.LASF96
 	.byte	0x2
 	.byte	0x10
 	.long	0x8f
 	.uleb128 0x3
 	.byte	0x91
-	.sleb128 -216
-	.uleb128 0x15
+	.sleb128 -208
+	.uleb128 0x18
 	.string	"f"
+	.byte	0x2
+	.byte	0x11
+	.long	0x62
+	.uleb128 0x18
+	.string	"m"
+	.byte	0x2
+	.byte	0x11
+	.long	0x62
+	.uleb128 0x16
+	.long	.LASF97
 	.byte	0x2
 	.byte	0x11
 	.long	0x62
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -220
-	.uleb128 0x15
-	.string	"m"
-	.byte	0x2
-	.byte	0x11
-	.long	0x62
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -244
 	.uleb128 0x16
-	.long	.LASF95
-	.byte	0x2
-	.byte	0x11
-	.long	0x62
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -240
-	.uleb128 0x16
-	.long	.LASF96
+	.long	.LASF98
 	.byte	0x2
 	.byte	0x12
-	.long	0x912
+	.long	0x929
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -144
 	.uleb128 0x16
-	.long	.LASF97
+	.long	.LASF99
 	.byte	0x2
 	.byte	0x13
-	.long	0x922
+	.long	0x939
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -144
 	.uleb128 0x14
-	.long	.LASF98
+	.long	.LASF100
 	.byte	0x2
 	.byte	0x14
 	.long	0x2a6
 	.uleb128 0x16
-	.long	.LASF99
+	.long	.LASF91
 	.byte	0x2
 	.byte	0x15
-	.long	0x2d
+	.long	0x62
 	.uleb128 0x3
 	.byte	0x91
-	.sleb128 -184
+	.sleb128 -216
+	.uleb128 0x16
+	.long	.LASF92
+	.byte	0x2
+	.byte	0x15
+	.long	0x62
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -212
+	.uleb128 0x14
+	.long	.LASF101
+	.byte	0x2
+	.byte	0x16
+	.long	0x2d
 	.uleb128 0x15
 	.string	"i"
 	.byte	0x2
-	.byte	0x17
-	.long	0x62
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -236
-	.uleb128 0x15
-	.string	"j"
-	.byte	0x2
-	.byte	0x17
-	.long	0x62
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -232
-	.uleb128 0x15
-	.string	"k"
-	.byte	0x2
-	.byte	0x17
+	.byte	0x18
 	.long	0x62
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -228
 	.uleb128 0x18
-	.string	"l"
+	.string	"j"
 	.byte	0x2
-	.byte	0x17
-	.long	0x62
-	.uleb128 0x14
-	.long	.LASF100
-	.byte	0x2
-	.byte	0x17
-	.long	0x62
-	.uleb128 0x14
-	.long	.LASF101
-	.byte	0x2
-	.byte	0x17
+	.byte	0x18
 	.long	0x62
 	.uleb128 0x18
-	.string	"Np"
+	.string	"k"
 	.byte	0x2
-	.byte	0x17
+	.byte	0x18
+	.long	0x62
+	.uleb128 0x18
+	.string	"l"
+	.byte	0x2
+	.byte	0x18
 	.long	0x62
 	.uleb128 0x14
 	.long	.LASF102
 	.byte	0x2
-	.byte	0x17
+	.byte	0x18
+	.long	0x62
+	.uleb128 0x14
+	.long	.LASF103
+	.byte	0x2
+	.byte	0x18
+	.long	0x62
+	.uleb128 0x18
+	.string	"Np"
+	.byte	0x2
+	.byte	0x18
+	.long	0x62
+	.uleb128 0x14
+	.long	.LASF104
+	.byte	0x2
+	.byte	0x18
 	.long	0x62
 	.uleb128 0x18
 	.string	"ii"
 	.byte	0x2
-	.byte	0x18
+	.byte	0x19
 	.long	0x62
 	.uleb128 0x18
 	.string	"jj"
 	.byte	0x2
-	.byte	0x18
+	.byte	0x19
 	.long	0x62
 	.uleb128 0x18
 	.string	"kk"
 	.byte	0x2
-	.byte	0x18
+	.byte	0x19
 	.long	0x62
 	.uleb128 0x18
 	.string	"xc"
 	.byte	0x2
-	.byte	0x19
+	.byte	0x1a
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"yc"
 	.byte	0x2
-	.byte	0x19
+	.byte	0x1a
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"zc"
 	.byte	0x2
-	.byte	0x19
+	.byte	0x1a
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"xp"
 	.byte	0x2
-	.byte	0x1a
+	.byte	0x1b
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"yp"
 	.byte	0x2
-	.byte	0x1a
+	.byte	0x1b
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"zp"
 	.byte	0x2
-	.byte	0x1a
+	.byte	0x1b
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"vxp"
 	.byte	0x2
-	.byte	0x1a
+	.byte	0x1b
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"vyp"
 	.byte	0x2
-	.byte	0x1a
+	.byte	0x1b
 	.long	0x2a6
 	.uleb128 0x18
 	.string	"vzp"
-	.byte	0x2
-	.byte	0x1a
-	.long	0x2a6
-	.uleb128 0x14
-	.long	.LASF103
-	.byte	0x2
-	.byte	0x1a
-	.long	0x2a6
-	.uleb128 0x14
-	.long	.LASF104
 	.byte	0x2
 	.byte	0x1b
 	.long	0x2a6
 	.uleb128 0x14
 	.long	.LASF105
 	.byte	0x2
+	.byte	0x1b
+	.long	0x2a6
+	.uleb128 0x14
+	.long	.LASF106
+	.byte	0x2
 	.byte	0x1c
+	.long	0x2a6
+	.uleb128 0x14
+	.long	.LASF107
+	.byte	0x2
+	.byte	0x1d
 	.long	0x2a6
 	.uleb128 0x15
 	.string	"pf"
 	.byte	0x2
-	.byte	0x1e
+	.byte	0x1f
 	.long	0x53a
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -208
-	.uleb128 0x16
-	.long	.LASF106
-	.byte	0x2
-	.byte	0x20
-	.long	0x2a6
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -200
 	.uleb128 0x16
-	.long	.LASF107
+	.long	.LASF108
 	.byte	0x2
-	.byte	0x20
+	.byte	0x21
 	.long	0x2a6
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -192
 	.uleb128 0x16
-	.long	.LASF108
+	.long	.LASF109
 	.byte	0x2
 	.byte	0x21
+	.long	0x2a6
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -184
+	.uleb128 0x16
+	.long	.LASF110
+	.byte	0x2
+	.byte	0x22
 	.long	0x62
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -224
 	.uleb128 0x16
-	.long	.LASF109
-	.byte	0x2
-	.byte	0x22
-	.long	0x932
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -176
-	.uleb128 0x16
-	.long	.LASF110
-	.byte	0x2
-	.byte	0x22
-	.long	0x932
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -176
-	.uleb128 0x14
 	.long	.LASF111
 	.byte	0x2
-	.byte	0x22
-	.long	0x2a6
+	.byte	0x23
+	.long	0x949
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -176
 	.uleb128 0x16
 	.long	.LASF112
 	.byte	0x2
 	.byte	0x23
-	.long	0x932
+	.long	0x949
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -176
-	.uleb128 0x16
+	.uleb128 0x14
 	.long	.LASF113
 	.byte	0x2
 	.byte	0x23
-	.long	0x932
-	.uleb128 0x3
-	.byte	0x91
-	.sleb128 -176
+	.long	0x2a6
 	.uleb128 0x16
 	.long	.LASF114
 	.byte	0x2
 	.byte	0x24
-	.long	0x932
+	.long	0x949
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -176
@@ -3117,7 +2495,23 @@ main:
 	.long	.LASF115
 	.byte	0x2
 	.byte	0x24
-	.long	0x932
+	.long	0x949
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -176
+	.uleb128 0x16
+	.long	.LASF116
+	.byte	0x2
+	.byte	0x25
+	.long	0x949
+	.uleb128 0x3
+	.byte	0x91
+	.sleb128 -176
+	.uleb128 0x16
+	.long	.LASF117
+	.byte	0x2
+	.byte	0x25
+	.long	0x949
 	.uleb128 0x3
 	.byte	0x91
 	.sleb128 -176
@@ -3127,21 +2521,21 @@ main:
 	.long	0x8f
 	.uleb128 0xb
 	.long	0x95
-	.long	0x922
+	.long	0x939
 	.uleb128 0xc
 	.long	0x86
 	.byte	0x63
 	.byte	0
 	.uleb128 0xb
 	.long	0x95
-	.long	0x932
+	.long	0x949
 	.uleb128 0xc
 	.long	0x86
 	.byte	0x31
 	.byte	0
 	.uleb128 0xb
 	.long	0x2a6
-	.long	0x942
+	.long	0x959
 	.uleb128 0xc
 	.long	0x86
 	.byte	0x2
@@ -3155,10 +2549,10 @@ main:
 	.byte	0x3
 	.quad	GV
 	.uleb128 0x1a
-	.long	.LASF116
+	.long	.LASF118
 	.byte	0x7
 	.byte	0x24
-	.long	0x96b
+	.long	0x982
 	.uleb128 0x9
 	.byte	0x3
 	.quad	part
@@ -3166,15 +2560,15 @@ main:
 	.byte	0x8
 	.long	0x35f
 	.uleb128 0x1a
-	.long	.LASF117
+	.long	.LASF119
 	.byte	0x7
 	.byte	0x24
-	.long	0x96b
+	.long	0x982
 	.uleb128 0x9
 	.byte	0x3
 	.quad	copyPart
 	.uleb128 0x1a
-	.long	.LASF118
+	.long	.LASF120
 	.byte	0x7
 	.byte	0x39
 	.long	0x3ab
@@ -3576,13 +2970,13 @@ main:
 	.string	"gadget_head"
 .LASF32:
 	.string	"_shortbuf"
-.LASF122:
+.LASF124:
 	.string	"_IO_lock_t"
 .LASF21:
 	.string	"_IO_buf_end"
 .LASF65:
 	.string	"redshift"
-.LASF97:
+.LASF99:
 	.string	"buffer"
 .LASF89:
 	.string	"writeGADGETBinaryFile"
@@ -3594,7 +2988,7 @@ main:
 	.string	"unsigned int"
 .LASF13:
 	.string	"_flags"
-.LASF107:
+.LASF109:
 	.string	"totMassCIC"
 .LASF52:
 	.string	"NpTot"
@@ -3602,33 +2996,35 @@ main:
 	.string	"dummy"
 .LASF25:
 	.string	"_markers"
-.LASF119:
+.LASF121:
 	.string	"GNU C 4.8.4 -mtune=generic -march=x86-64 -g -fstack-protector"
-.LASF103:
+.LASF105:
 	.string	"vmod"
+.LASF91:
+	.string	"initID"
 .LASF88:
 	.string	"uintaux"
-.LASF111:
+.LASF113:
 	.string	"sumaVelModule"
-.LASF117:
+.LASF119:
 	.string	"copyPart"
 .LASF46:
 	.string	"_pos"
-.LASF118:
+.LASF120:
 	.string	"Header"
 .LASF24:
 	.string	"_IO_save_end"
 .LASF49:
 	.string	"float"
-.LASF100:
+.LASF102:
 	.string	"index"
-.LASF110:
+.LASF112:
 	.string	"sumaVel"
 .LASF48:
 	.string	"long long unsigned int"
 .LASF79:
 	.string	"file"
-.LASF116:
+.LASF118:
 	.string	"part"
 .LASF74:
 	.string	"fill"
@@ -3636,7 +3032,7 @@ main:
 	.string	"read_parameters"
 .LASF59:
 	.string	"OmegaL0"
-.LASF121:
+.LASF123:
 	.string	"/home/darivadi/Documents/University/Master/Courses/Investigation_IV/Codes_semester_IV/Split_snapshots"
 .LASF23:
 	.string	"_IO_backup_base"
@@ -3646,7 +3042,7 @@ main:
 	.string	"_offset"
 .LASF64:
 	.string	"time"
-.LASF123:
+.LASF125:
 	.string	"readGADGETBinaryFile"
 .LASF71:
 	.string	"BoxSize"
@@ -3656,21 +3052,21 @@ main:
 	.string	"flag_cooling"
 .LASF7:
 	.string	"size_t"
-.LASF109:
+.LASF111:
 	.string	"sumaMom"
 .LASF58:
 	.string	"OmegaM0"
-.LASF98:
+.LASF100:
 	.string	"auxFiles"
 .LASF16:
 	.string	"_IO_read_base"
-.LASF92:
+.LASF94:
 	.string	"argc"
 .LASF44:
 	.string	"_next"
 .LASF51:
 	.string	"globalVariables"
-.LASF94:
+.LASF96:
 	.string	"infile"
 .LASF11:
 	.string	"char"
@@ -3680,7 +3076,7 @@ main:
 	.string	"_mode"
 .LASF77:
 	.string	"filename"
-.LASF102:
+.LASF104:
 	.string	"idPart"
 .LASF43:
 	.string	"_IO_marker"
@@ -3690,17 +3086,17 @@ main:
 	.string	"Npart"
 .LASF90:
 	.string	"FileNum"
-.LASF104:
+.LASF106:
 	.string	"Window_fn"
 .LASF17:
 	.string	"_IO_write_base"
 .LASF47:
 	.string	"long long int"
-.LASF120:
+.LASF122:
 	.string	"main_split_snap.c"
 .LASF57:
 	.string	"FILENAME"
-.LASF112:
+.LASF114:
 	.string	"sumaMomPart"
 .LASF22:
 	.string	"_IO_save_base"
@@ -3708,9 +3104,9 @@ main:
 	.string	"NFiles"
 .LASF78:
 	.string	"filenamedump"
-.LASF115:
+.LASF117:
 	.string	"auxVel"
-.LASF99:
+.LASF101:
 	.string	"aux_size"
 .LASF35:
 	.string	"__pad1"
@@ -3726,9 +3122,9 @@ main:
 	.string	"mass"
 .LASF31:
 	.string	"_vtable_offset"
-.LASF93:
+.LASF95:
 	.string	"argv"
-.LASF114:
+.LASF116:
 	.string	"auxMom"
 .LASF15:
 	.string	"_IO_read_end"
@@ -3742,17 +3138,19 @@ main:
 	.string	"npartTotal"
 .LASF83:
 	.string	"N_max"
+.LASF92:
+	.string	"endID"
 .LASF66:
 	.string	"flag_sfr"
 .LASF67:
 	.string	"flag_feedback"
-.LASF105:
+.LASF107:
 	.string	"norm_factor"
 .LASF33:
 	.string	"_lock"
 .LASF10:
 	.string	"sizetype"
-.LASF101:
+.LASF103:
 	.string	"indexaux"
 .LASF0:
 	.string	"long unsigned int"
@@ -3762,13 +3160,13 @@ main:
 	.string	"_old_offset"
 .LASF42:
 	.string	"_IO_FILE"
-.LASF96:
+.LASF98:
 	.string	"NFilename"
-.LASF95:
+.LASF97:
 	.string	"partsCount"
 .LASF82:
 	.string	"N_min"
-.LASF108:
+.LASF110:
 	.string	"sumaPart"
 .LASF1:
 	.string	"unsigned char"
@@ -3780,7 +3178,7 @@ main:
 	.string	"Omega0"
 .LASF18:
 	.string	"_IO_write_ptr"
-.LASF113:
+.LASF115:
 	.string	"sumaVelPart"
 .LASF8:
 	.string	"__off_t"
@@ -3792,7 +3190,7 @@ main:
 	.string	"signed char"
 .LASF2:
 	.string	"short unsigned int"
-.LASF91:
+.LASF93:
 	.string	"main"
 .LASF50:
 	.string	"double"
@@ -3808,7 +3206,7 @@ main:
 	.string	"num_files"
 .LASF30:
 	.string	"_cur_column"
-.LASF106:
+.LASF108:
 	.string	"totalMass"
 .LASF81:
 	.string	"N_tot"

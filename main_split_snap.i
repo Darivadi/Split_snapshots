@@ -3345,7 +3345,7 @@ int read_parameters( char filename[] )
     file = fopen( filenamedump, "r" );
 
 
-    fscanf(file, "%d", &GV.lengthDivs);
+    fscanf(file, "%d", &GV.NFiles);
     fscanf(file, "%s", GV.FILENAME);
 
     GV.NFiles = 1.0 * GV.lengthDivs * GV.lengthDivs* GV.lengthDivs;
@@ -3498,7 +3498,8 @@ int readGADGETBinaryFile(){
   return N_tot;
 }
 # 226 "readWrite.h"
-int writeGADGETBinaryFile(char FileNum[100], int N_tot){
+int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
+{
   FILE *fdata = ((void *)0);
   int i, j;
   int N_min, N_max, dummy, nread=0;
@@ -3519,6 +3520,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 
   printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
 
+  Header.Npart[1] = N_tot;
+  Header.npartTotal[1] = N_tot;
+
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   fwrite(&Header, sizeof(struct gadget_head), 1, fdata);
   fwrite(&dummy, sizeof(dummy), 1, fdata);
@@ -3534,7 +3538,8 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   printf("dummy writen\n");
-  for(i=0; i<N_tot; i++)
+
+  for(i=initID; i<(endID+1); i++)
     {
       faux[0] = copyPart[i].pos[0];
       faux[1] = copyPart[i].pos[1];
@@ -3548,7 +3553,8 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 
 
   fwrite(&dummy,sizeof(dummy),1,fdata);
-  for(i=0; i<N_tot; i++)
+
+  for(i=initID; i<(endID+1); i++)
     {
       faux[0] = copyPart[i].vel[0];
       faux[1] = copyPart[i].vel[1];
@@ -3556,51 +3562,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
       fwrite(&faux[0],sizeof(float),3,fdata);
     }
   printf("Velocities writen\n");
-
-
-
-
-  dummy = N_tot*sizeof(unsigned int);
-  fwrite(&dummy, sizeof(dummy), 1, fdata);
-  for(i=0; i<N_tot; i++)
-    {
-      uintaux = copyPart[i].id;
-      nread=fwrite(&uintaux, sizeof(unsigned int), 1, fdata);
-    }
-  printf("IDs writen\n");
-
-
-
-
-  printf("Writing masses\n");
-  dummy = 3*N_tot*sizeof(float);
-  fwrite(&dummy, sizeof(dummy),1,fdata);
-# 313 "readWrite.h"
-  N_min = N_max=0;
-  for(j=0; j<=5; j++)
-    {
-      N_max=N_max+Header.npartTotal[j];
-      if((Header.mass[j]==0) && (Header.npartTotal[j]!=0))
- {
-   for(i=N_min;i<N_max;i++)
-     {
-       Maux = copyPart[i].mass;
-       fwrite(&Maux,sizeof(float),1,fdata);
-       printf("Maux writen\n");
-     }
- }
-
-      if((Header.mass[j]!=0) && (Header.npartTotal[j]!=0))
- {
-   for(i=N_min;i<N_max;i++)
-     {
-       Maux = Header.mass[j];
-     }
- }
-      N_min=N_max;
-    }
-# 361 "readWrite.h"
-  fwrite(&dummy,sizeof(dummy),1,fdata);
+# 371 "readWrite.h"
   fclose(fdata);
 
   return 0;
@@ -3611,10 +3573,11 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 int main(int argc, char *argv[])
 {
   char *infile=((void *)0);
-  int f, m, partsCount = 0;
+  int f, m, partsCount;
   char NFilename[100];
   char buffer[50];
   double auxFiles;
+  int initID, endID;
   size_t aux_size;
 
   int i, j, k, l, index, indexaux, Np, idPart;
@@ -3648,8 +3611,6 @@ int main(int argc, char *argv[])
   read_parameters(infile);
 
 
-  GV.L = 400.0;
-  GV.SnapLength = GV.L / (1.0*GV.lengthDivs);
 
 
   GV.NpTot = readGADGETBinaryFile();
@@ -3663,6 +3624,9 @@ int main(int argc, char *argv[])
 
   GV.L = Header.BoxSize;
   GV.mass = Header.mass[1];
+
+
+
 
   printf("-----------------------------------------------\n");
   printf("Cosmological parameters:\n");
@@ -3684,104 +3648,18 @@ int main(int argc, char *argv[])
 
   printf("Let's begin with the division of files\n");
 
-
-  for(i=0; i<GV.lengthDivs ; i++)
+  partsCount = GV.NpTot / GV.NFiles;
+  for(i=0; i<GV.NFiles; i++)
     {
-      for(j=0; j<GV.lengthDivs; j++)
- {
-   for(k=0; k<GV.lengthDivs; k++)
-     {
-       f = (k)+GV.lengthDivs*((j)+GV.lengthDivs*(i));
-       snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", f);
+      snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", i);
 
-       if(f%((int)GV.NFiles)==0)
-  {
-    printf("Writing file %d\n", f);
-    printf("i=%d j=%d k=%d f=%d\n", i, j, k, f);
-    printf("i* GV.SnapLength= %lf, (i+1)* GV.SnapLength= %lf\n",
-    i* GV.SnapLength, (i+1)* GV.SnapLength);
-    printf("j* GV.SnapLength= %lf, (j+1)* GV.SnapLength= %lf\n",
-    j* GV.SnapLength, (j+1)* GV.SnapLength);
-    printf("k* GV.SnapLength= %lf, (k+1)* GV.SnapLength= %lf\n",
-    k* GV.SnapLength, (k+1)* GV.SnapLength);
-  }
+      initID = i*partsCount;
+      endID = (i+1)*partsCount - 1;
 
+      writeGADGETBinaryFile(buffer , partsCount, initID, endID);
 
-       if(copyPart == ((void *)0))
-  {
-    printf("Allocating memory for copyPart\n");
-    copyPart = (struct particle *) calloc((size_t) 0, sizeof(struct particle));
-    aux_size = sizeof(copyPart);
-    printf("Memory allocated for copyPart: %lu\n", aux_size);
-  }
-
-       for(m=0; m<GV.NpTot; m++)
-  {
-    if(m%50000000==0)
-      {
-        printf("Particle %d\n", m);
-      }
-
-    if( (part[m].pos[0] >= (i* GV.SnapLength)) && (part[m].pos[0] < ((i+1)* GV.SnapLength)) )
-      {
-        if( (part[m].pos[1] >= (j* GV.SnapLength)) && (part[m].pos[1] < ((j+1)* GV.SnapLength)) )
-   {
-     if( (part[m].pos[2] >= (k* GV.SnapLength)) && (part[m].pos[2] < ((k+1)* GV.SnapLength)) )
-       {
-
-         partsCount++;
-         printf("Reallocating memory for copyPart!\n");
-
-
-         copyPart = (struct particle *) realloc(copyPart, partsCount * sizeof(copyPart));
-
-         if(copyPart == ((void *)0))
-    {
-      printf("Unable to reallocate memory\n");
     }
-
-
-         copyPart[m].pos[0] = part[m].pos[0];
-         copyPart[m].pos[1] = part[m].pos[1];
-         copyPart[m].pos[2] = part[m].pos[2];
-
-
-         copyPart[m].vel[0] = part[m].vel[0];
-         copyPart[m].vel[1] = part[m].vel[1];
-         copyPart[m].vel[2] = part[m].vel[2];
-
-         copyPart[i].id = part[i].id;
-         copyPart[i].mass = part[m].mass;
-
-
-       }
-   }
-      }
-
-
-
-  }
-
-       printf("Writing file %d\n", f);
-       writeGADGETBinaryFile(buffer, partsCount);
-
-
-       free(copyPart);
-
-
-       if(f%((int)GV.NFiles)==0)
-  {
-    printf("File %d was writen\n", f);
-  }
-
-       partsCount = 0;
-     }
- }
-    }
-
-
-
-
+# 203 "main_split_snap.c"
   free(part);
 
   return 0;

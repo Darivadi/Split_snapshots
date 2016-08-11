@@ -50,7 +50,7 @@ int read_parameters( char filename[] )
     file = fopen( filenamedump, "r" );
     
     /*Reading filename*/
-    fscanf(file, "%d", &GV.lengthDivs);     
+    fscanf(file, "%d", &GV.NFiles);     
     fscanf(file, "%s", GV.FILENAME); 
 
     GV.NFiles = 1.0 * GV.lengthDivs * GV.lengthDivs* GV.lengthDivs;
@@ -223,7 +223,8 @@ RETURN: 0
 ****************************************************************************************************/
 
 
-int writeGADGETBinaryFile(char FileNum[100], int N_tot){
+int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
+{
   FILE *fdata = NULL;
   int i, j;
   int  N_min, N_max, dummy, nread=0;
@@ -244,6 +245,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
   //N_tot = GV.NpTot;
   printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
   
+  Header.Npart[1] = N_tot;
+  Header.npartTotal[1] = N_tot;
+
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   fwrite(&Header, sizeof(struct gadget_head), 1, fdata);
   fwrite(&dummy, sizeof(dummy), 1, fdata);
@@ -259,7 +263,8 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
   
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   printf("dummy writen\n");
-  for(i=0; i<N_tot; i++)
+  //for(i=0; i<N_tot; i++) 
+  for(i=initID; i<(endID+1); i++)
     {      
       faux[X] = copyPart[i].pos[X];
       faux[Y] = copyPart[i].pos[Y];
@@ -273,7 +278,8 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
   /* Velocities */
   /**********************/
   fwrite(&dummy,sizeof(dummy),1,fdata);
-  for(i=0; i<N_tot; i++)
+  //for(i=0; i<N_tot; i++)
+  for(i=initID; i<(endID+1); i++)
     {
       faux[X] = copyPart[i].vel[X];
       faux[Y] = copyPart[i].vel[Y];
@@ -285,6 +291,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
   /****************/
   /* ID's */
   /****************/
+  /*
   dummy = N_tot*sizeof(unsigned int);
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   for(i=0; i<N_tot; i++)
@@ -293,14 +300,15 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
       nread=fwrite(&uintaux, sizeof(unsigned int), 1, fdata);
     }//for i
   printf("IDs writen\n");
-  
+  */
   /******************/
   /* Getting masses */
   /******************/
+  /*
   printf("Writing masses\n");
   dummy = 3*N_tot*sizeof(float);
   fwrite(&dummy, sizeof(dummy),1,fdata);
-  
+  */
   /*
   for(i=0; i<N_tot; i++)
     {
@@ -309,7 +317,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
     }//for i
   */
   
-  
+  /*
   N_min = N_max=0;
   for(j=0; j<=5; j++)
     {
@@ -333,7 +341,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 	}//if
       N_min=N_max;
     }//for j
-
+  */
 
   /*
   N_min = N_max=0;
@@ -357,8 +365,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot){
 	}//if
       N_min=N_max;
     }//for j
-  */
+  
   fwrite(&dummy,sizeof(dummy),1,fdata);
+  */
   fclose(fdata);
 
   return 0;
