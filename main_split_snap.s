@@ -1152,7 +1152,7 @@ writeGADGETBinaryFile:
 .LC50:
 	.string	"PartsCount=%d"
 .LC51:
-	.string	"./Box_400_512_150.%d"
+	.string	"./Data/Box_400_512_150.%d"
 .LC52:
 	.string	"Writing file %s"
 .LC53:

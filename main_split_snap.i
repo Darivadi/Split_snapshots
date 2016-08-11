@@ -3651,7 +3651,7 @@ int main(int argc, char *argv[])
   printf("PartsCount=%d", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {
-      snprintf(buffer, sizeof(char)*50, "./Box_400_512_150.%d", i);
+      snprintf(buffer, sizeof(char)*50, "./Data/Box_400_512_150.%d", i);
       printf("Writing file %s", buffer);
 
       initID = i*partsCount;
