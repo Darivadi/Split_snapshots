@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
   printf("Let's begin with the division of files\n");
 
   partsCount = GV.NpTot / GV.NFiles;
+  
   printf("PartsCount=%d", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {

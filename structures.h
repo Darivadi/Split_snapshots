@@ -9,9 +9,8 @@ struct globalVariables
   float L;       // Lenght of the simulation in Mpc.
   int NpTot;   // Total number of particles
   float mass;    // Mass of each particle
-  float NFiles;  //Numer of files to rewrite the snapshot
+  int NFiles;  //Numer of files to rewrite the snapshot
   float SnapLength; //Length (per axis) of each of the rewritten files
-  int lengthDivs;  //Number of divisions per axis
   char FILENAME[1000]; //Path of the gadget file
 
   /* COSMOLOGICAL PARAMETERS*/

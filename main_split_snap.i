@@ -3245,9 +3245,8 @@ struct globalVariables
   float L;
   int NpTot;
   float mass;
-  float NFiles;
+  int NFiles;
   float SnapLength;
-  int lengthDivs;
   char FILENAME[1000];
 
 
@@ -3648,6 +3647,7 @@ int main(int argc, char *argv[])
   printf("Let's begin with the division of files\n");
 
   partsCount = GV.NpTot / GV.NFiles;
+
   printf("PartsCount=%d", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {
@@ -3662,7 +3662,7 @@ int main(int argc, char *argv[])
       writeGADGETBinaryFile(buffer , partsCount, initID, endID);
 
     }
-# 207 "main_split_snap.c"
+# 208 "main_split_snap.c"
   free(part);
 
   return 0;
