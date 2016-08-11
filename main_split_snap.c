@@ -91,11 +91,11 @@ int main(int argc, char *argv[])
 
   partsCount = GV.NpTot / GV.NFiles;
   
-  printf("PartsCount=%d", partsCount);
+  printf("PartsCount=%d\n", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {
       snprintf(buffer, sizeof(char)*50, "./Data/Box_400_512_150.%d", i);
-      printf("Writing file %s", buffer);
+      printf("Writing file %s\n", buffer);
 
       initID = i*partsCount;
       endID = (i+1)*partsCount - 1;

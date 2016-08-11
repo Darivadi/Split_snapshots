@@ -242,7 +242,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   printf("File %s is ready to be writen\n", FileNum);
 
   //N_tot = GV.NpTot;
-  printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
+  printf("N_tot = %d, GV.NpTot = %d\n", N_tot, GV.NpTot);
+  printf("iID=%d, eID=%d\n", initID, endID);
+
   
   Header.Npart[1] = N_tot;
   Header.npartTotal[1] = N_tot;
@@ -262,6 +264,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   printf("dummy writen\n");
+
   //for(i=0; i<N_tot; i++) 
   for(i=initID; i<(endID+1); i++)
     {      

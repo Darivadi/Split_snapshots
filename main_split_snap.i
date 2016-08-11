@@ -3516,7 +3516,9 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
   printf("File %s is ready to be writen\n", FileNum);
 
 
-  printf("N_tot = %d, GV.NpTot = %d", N_tot, GV.NpTot);
+  printf("N_tot = %d, GV.NpTot = %d\n", N_tot, GV.NpTot);
+  printf("iID=%d, eID=%d\n", initID, endID);
+
 
   Header.Npart[1] = N_tot;
   Header.npartTotal[1] = N_tot;
@@ -3536,6 +3538,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
 
   fwrite(&dummy, sizeof(dummy), 1, fdata);
   printf("dummy writen\n");
+
 
   for(i=initID; i<(endID+1); i++)
     {
@@ -3560,7 +3563,7 @@ int writeGADGETBinaryFile(char FileNum[100], int N_tot, int initID, int endID)
       fwrite(&faux[0],sizeof(float),3,fdata);
     }
   printf("Velocities writen\n");
-# 370 "readWrite.h"
+# 373 "readWrite.h"
   fclose(fdata);
 
   return 0;
@@ -3648,11 +3651,11 @@ int main(int argc, char *argv[])
 
   partsCount = GV.NpTot / GV.NFiles;
 
-  printf("PartsCount=%d", partsCount);
+  printf("PartsCount=%d\n", partsCount);
   for(i=0; i<GV.NFiles; i++)
     {
       snprintf(buffer, sizeof(char)*50, "./Data/Box_400_512_150.%d", i);
-      printf("Writing file %s", buffer);
+      printf("Writing file %s\n", buffer);
 
       initID = i*partsCount;
       endID = (i+1)*partsCount - 1;

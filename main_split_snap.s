@@ -876,16 +876,18 @@ readGADGETBinaryFile:
 .LC35:
 	.string	"File %s is ready to be writen\n"
 .LC36:
-	.string	"N_tot = %d, GV.NpTot = %d"
+	.string	"N_tot = %d, GV.NpTot = %d\n"
 .LC37:
-	.string	"Header writen"
+	.string	"iID=%d, eID=%d\n"
 .LC38:
-	.string	"dummy = %d\n"
+	.string	"Header writen"
 .LC39:
-	.string	"dummy writen"
+	.string	"dummy = %d\n"
 .LC40:
-	.string	"Positions writen"
+	.string	"dummy writen"
 .LC41:
+	.string	"Positions writen"
+.LC42:
 	.string	"Velocities writen"
 	.text
 	.globl	writeGADGETBinaryFile
@@ -946,27 +948,19 @@ writeGADGETBinaryFile:
 	movl	$.LC36, %edi
 	movl	$0, %eax
 	call	printf
-	.loc 1 247 0
+	.loc 1 246 0
+	movl	-68(%rbp), %edx
+	movl	-64(%rbp), %eax
+	movl	%eax, %esi
+	movl	$.LC37, %edi
+	movl	$0, %eax
+	call	printf
+	.loc 1 249 0
 	movl	-60(%rbp), %eax
 	movl	%eax, Header+4(%rip)
-	.loc 1 248 0
+	.loc 1 250 0
 	movl	-60(%rbp), %eax
 	movl	%eax, Header+100(%rip)
-	.loc 1 250 0
-	movq	-24(%rbp), %rdx
-	leaq	-36(%rbp), %rax
-	movq	%rdx, %rcx
-	movl	$1, %edx
-	movl	$4, %esi
-	movq	%rax, %rdi
-	call	fwrite
-	.loc 1 251 0
-	movq	-24(%rbp), %rax
-	movq	%rax, %rcx
-	movl	$1, %edx
-	movl	$256, %esi
-	movl	$Header, %edi
-	call	fwrite
 	.loc 1 252 0
 	movq	-24(%rbp), %rdx
 	leaq	-36(%rbp), %rax
@@ -975,23 +969,14 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
+	.loc 1 253 0
+	movq	-24(%rbp), %rax
+	movq	%rax, %rcx
+	movl	$1, %edx
+	movl	$256, %esi
+	movl	$Header, %edi
+	call	fwrite
 	.loc 1 254 0
-	movl	$.LC37, %edi
-	call	puts
-	.loc 1 259 0
-	movl	-60(%rbp), %edx
-	movl	%edx, %eax
-	addl	%eax, %eax
-	addl	%edx, %eax
-	sall	$2, %eax
-	movl	%eax, -36(%rbp)
-	.loc 1 261 0
-	movl	-36(%rbp), %eax
-	movl	%eax, %esi
-	movl	$.LC38, %edi
-	movl	$0, %eax
-	call	printf
-	.loc 1 263 0
 	movq	-24(%rbp), %rdx
 	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
@@ -999,15 +984,39 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 264 0
-	movl	$.LC39, %edi
+	.loc 1 256 0
+	movl	$.LC38, %edi
 	call	puts
+	.loc 1 261 0
+	movl	-60(%rbp), %edx
+	movl	%edx, %eax
+	addl	%eax, %eax
+	addl	%edx, %eax
+	sall	$2, %eax
+	movl	%eax, -36(%rbp)
+	.loc 1 263 0
+	movl	-36(%rbp), %eax
+	movl	%eax, %esi
+	movl	$.LC39, %edi
+	movl	$0, %eax
+	call	printf
+	.loc 1 265 0
+	movq	-24(%rbp), %rdx
+	leaq	-36(%rbp), %rax
+	movq	%rdx, %rcx
+	movl	$1, %edx
+	movl	$4, %esi
+	movq	%rax, %rdi
+	call	fwrite
 	.loc 1 266 0
+	movl	$.LC40, %edi
+	call	puts
+	.loc 1 269 0
 	movl	-64(%rbp), %eax
 	movl	%eax, -32(%rbp)
 	jmp	.L38
 .L39:
-	.loc 1 268 0 discriminator 2
+	.loc 1 271 0 discriminator 2
 	movq	copyPart(%rip), %rax
 	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1015,7 +1024,7 @@ writeGADGETBinaryFile:
 	addq	%rdx, %rax
 	movl	4(%rax), %eax
 	movl	%eax, -16(%rbp)
-	.loc 1 269 0 discriminator 2
+	.loc 1 272 0 discriminator 2
 	movq	copyPart(%rip), %rax
 	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1023,7 +1032,7 @@ writeGADGETBinaryFile:
 	addq	%rdx, %rax
 	movl	8(%rax), %eax
 	movl	%eax, -12(%rbp)
-	.loc 1 270 0 discriminator 2
+	.loc 1 273 0 discriminator 2
 	movq	copyPart(%rip), %rax
 	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1031,7 +1040,7 @@ writeGADGETBinaryFile:
 	addq	%rdx, %rax
 	movl	12(%rax), %eax
 	movl	%eax, -8(%rbp)
-	.loc 1 271 0 discriminator 2
+	.loc 1 274 0 discriminator 2
 	movq	-24(%rbp), %rdx
 	leaq	-16(%rbp), %rax
 	movq	%rdx, %rcx
@@ -1039,15 +1048,15 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 266 0 discriminator 2
+	.loc 1 269 0 discriminator 2
 	addl	$1, -32(%rbp)
 .L38:
-	.loc 1 266 0 is_stmt 0 discriminator 1
+	.loc 1 269 0 is_stmt 0 discriminator 1
 	movl	-68(%rbp), %eax
 	addl	$1, %eax
 	cmpl	-32(%rbp), %eax
 	jg	.L39
-	.loc 1 273 0 is_stmt 1
+	.loc 1 276 0 is_stmt 1
 	movq	-24(%rbp), %rdx
 	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
@@ -1056,10 +1065,10 @@ writeGADGETBinaryFile:
 	movq	%rax, %rdi
 	call	fwrite
 	movl	%eax, -28(%rbp)
-	.loc 1 275 0
-	movl	$.LC40, %edi
+	.loc 1 278 0
+	movl	$.LC41, %edi
 	call	puts
-	.loc 1 279 0
+	.loc 1 282 0
 	movq	-24(%rbp), %rdx
 	leaq	-36(%rbp), %rax
 	movq	%rdx, %rcx
@@ -1067,12 +1076,12 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 281 0
+	.loc 1 284 0
 	movl	-64(%rbp), %eax
 	movl	%eax, -32(%rbp)
 	jmp	.L40
 .L41:
-	.loc 1 283 0 discriminator 2
+	.loc 1 286 0 discriminator 2
 	movq	copyPart(%rip), %rax
 	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1080,7 +1089,7 @@ writeGADGETBinaryFile:
 	addq	%rdx, %rax
 	movl	16(%rax), %eax
 	movl	%eax, -16(%rbp)
-	.loc 1 284 0 discriminator 2
+	.loc 1 287 0 discriminator 2
 	movq	copyPart(%rip), %rax
 	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1088,7 +1097,7 @@ writeGADGETBinaryFile:
 	addq	%rdx, %rax
 	movl	20(%rax), %eax
 	movl	%eax, -12(%rbp)
-	.loc 1 285 0 discriminator 2
+	.loc 1 288 0 discriminator 2
 	movq	copyPart(%rip), %rax
 	movl	-32(%rbp), %edx
 	movslq	%edx, %rdx
@@ -1096,7 +1105,7 @@ writeGADGETBinaryFile:
 	addq	%rdx, %rax
 	movl	24(%rax), %eax
 	movl	%eax, -8(%rbp)
-	.loc 1 286 0 discriminator 2
+	.loc 1 289 0 discriminator 2
 	movq	-24(%rbp), %rdx
 	leaq	-16(%rbp), %rax
 	movq	%rdx, %rcx
@@ -1104,24 +1113,24 @@ writeGADGETBinaryFile:
 	movl	$4, %esi
 	movq	%rax, %rdi
 	call	fwrite
-	.loc 1 281 0 discriminator 2
+	.loc 1 284 0 discriminator 2
 	addl	$1, -32(%rbp)
 .L40:
-	.loc 1 281 0 is_stmt 0 discriminator 1
+	.loc 1 284 0 is_stmt 0 discriminator 1
 	movl	-68(%rbp), %eax
 	addl	$1, %eax
 	cmpl	-32(%rbp), %eax
 	jg	.L41
-	.loc 1 288 0 is_stmt 1
-	movl	$.LC41, %edi
+	.loc 1 291 0 is_stmt 1
+	movl	$.LC42, %edi
 	call	puts
-	.loc 1 370 0
+	.loc 1 373 0
 	movq	-24(%rbp), %rax
 	movq	%rax, %rdi
 	call	fclose
-	.loc 1 372 0
+	.loc 1 375 0
 	movl	$0, %eax
-	.loc 1 374 0
+	.loc 1 377 0
 	leave
 	.cfi_def_cfa 7, 8
 	ret
@@ -1130,33 +1139,31 @@ writeGADGETBinaryFile:
 	.size	writeGADGETBinaryFile, .-writeGADGETBinaryFile
 	.section	.rodata
 	.align 8
-.LC42:
-	.string	"Error: Incomplete number of parameters. Execute as follows:"
 .LC43:
-	.string	"%s Parameters_file\n"
+	.string	"Error: Incomplete number of parameters. Execute as follows:"
 .LC44:
+	.string	"%s Parameters_file\n"
+.LC45:
 	.string	"Reading parameters"
 	.align 8
-.LC45:
-	.string	"-----------------------------------------------"
 .LC46:
+	.string	"-----------------------------------------------"
+.LC47:
 	.string	"Cosmological parameters:"
 	.align 8
-.LC47:
-	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf SnapLength=%lf\n"
 .LC48:
+	.string	"OmegaM0=%lf OmegaL0=%lf redshift=%lf HubbleParam=%lf SnapLength=%lf\n"
+.LC49:
 	.string	"Filename=%s\n"
 	.align 8
-.LC49:
-	.string	"Let's begin with the division of files"
 .LC50:
-	.string	"PartsCount=%d"
+	.string	"Let's begin with the division of files"
 .LC51:
-	.string	"./Data/Box_400_512_150.%d"
+	.string	"PartsCount=%d\n"
 .LC52:
-	.string	"Writing file %s"
+	.string	"./Data/Box_400_512_150.%d"
 .LC53:
-	.string	"iID=%d, eID=%d\n"
+	.string	"Writing file %s\n"
 	.text
 	.globl	main
 	.type	main, @function
@@ -1194,13 +1201,13 @@ main:
 	cmpl	$1, -228(%rbp)
 	jg	.L44
 	.loc 2 45 0
-	movl	$.LC42, %edi
+	movl	$.LC43, %edi
 	call	puts
 	.loc 2 46 0
 	movq	-240(%rbp), %rax
 	movq	(%rax), %rax
 	movq	%rax, %rsi
-	movl	$.LC43, %edi
+	movl	$.LC44, %edi
 	movl	$0, %eax
 	call	printf
 	.loc 2 47 0
@@ -1212,7 +1219,7 @@ main:
 	movq	8(%rax), %rax
 	movq	%rax, -192(%rbp)
 	.loc 2 51 0
-	movl	$.LC44, %edi
+	movl	$.LC45, %edi
 	call	puts
 	.loc 2 52 0
 	movq	-192(%rbp), %rax
@@ -1253,10 +1260,10 @@ main:
 	cvtpd2ps	%xmm0, %xmm0
 	movss	%xmm0, GV+8(%rip)
 	.loc 2 72 0
-	movl	$.LC45, %edi
+	movl	$.LC46, %edi
 	call	puts
 	.loc 2 73 0
-	movl	$.LC46, %edi
+	movl	$.LC47, %edi
 	call	puts
 	.loc 2 79 0
 	movss	GV+16(%rip), %xmm0
@@ -1283,22 +1290,22 @@ main:
 	.loc 2 74 0
 	unpcklps	%xmm0, %xmm0
 	cvtps2pd	%xmm0, %xmm0
-	movl	$.LC47, %edi
+	movl	$.LC48, %edi
 	movl	$5, %eax
 	call	printf
 	.loc 2 80 0
-	movl	$.LC45, %edi
+	movl	$.LC46, %edi
 	call	puts
 	.loc 2 82 0
 	movl	$GV+20, %esi
-	movl	$.LC48, %edi
+	movl	$.LC49, %edi
 	movl	$0, %eax
 	call	printf
 	.loc 2 83 0
-	movl	$.LC45, %edi
+	movl	$.LC46, %edi
 	call	puts
 	.loc 2 90 0
-	movl	$.LC49, %edi
+	movl	$.LC50, %edi
 	call	puts
 	.loc 2 92 0
 	movl	GV+4(%rip), %eax
@@ -1309,7 +1316,7 @@ main:
 	.loc 2 94 0
 	movl	-204(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC50, %edi
+	movl	$.LC51, %edi
 	movl	$0, %eax
 	call	printf
 	.loc 2 95 0
@@ -1320,7 +1327,7 @@ main:
 	movl	-212(%rbp), %edx
 	leaq	-128(%rbp), %rax
 	movl	%edx, %ecx
-	movl	$.LC51, %edx
+	movl	$.LC52, %edx
 	movl	$50, %esi
 	movq	%rax, %rdi
 	movl	$0, %eax
@@ -1328,7 +1335,7 @@ main:
 	.loc 2 98 0 discriminator 2
 	leaq	-128(%rbp), %rax
 	movq	%rax, %rsi
-	movl	$.LC52, %edi
+	movl	$.LC53, %edi
 	movl	$0, %eax
 	call	printf
 	.loc 2 100 0 discriminator 2
@@ -1345,7 +1352,7 @@ main:
 	movl	-196(%rbp), %edx
 	movl	-200(%rbp), %eax
 	movl	%eax, %esi
-	movl	$.LC53, %edi
+	movl	$.LC37, %edi
 	movl	$0, %eax
 	call	printf
 	.loc 2 105 0 discriminator 2
